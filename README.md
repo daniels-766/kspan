@@ -47,11 +47,11 @@ Repositori ini dilindungi oleh [MIT License](LICENSE)
 ---
 
 <div align="center">
-  Dibangun oleh Tim UATAS</a> · Terdaftar dan diawasi oleh OJK
+  Dibangun oleh Tim KSP Artha Niaga</a> · Terdaftar dan diawasi oleh OJK
 </div>
 
 <div align="center">
-  © 2025 UATAS | Aman. Terpercaya. Legal.
+  © 2025 KSP Artha Niaga | Aman. Terpercaya. Legal.
 </div>
 
 
