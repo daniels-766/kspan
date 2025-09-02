@@ -530,6 +530,7 @@ def filtering():
     range1 = request.args.get('range1', '')
     range2 = request.args.get('range2', '')
 
+    # --- Helper untuk parsing range dari request
     def parse_range(date_range):
         try:
             start, end = date_range.split(' - ')
@@ -537,35 +538,33 @@ def filtering():
         except ValueError:
             return None, None
 
-    def format_range_label(start, end):
-        try:
-            start_fmt = datetime.strptime(start, "%Y-%m-%d").strftime("%d %b")
-            end_fmt = datetime.strptime(end, "%Y-%m-%d").strftime("%d %b")
-            return f"{start_fmt} - {end_fmt}"
-        except:
-            return "Range"
-        
+    # --- Helper untuk format label range (Bahasa Indonesia)
     def format_range_label(start, end):
         bulan_id = {
             'January': 'Januari', 'February': 'Februari', 'March': 'Maret', 'April': 'April',
             'May': 'Mei', 'June': 'Juni', 'July': 'Juli', 'August': 'Agustus',
             'September': 'September', 'October': 'Oktober', 'November': 'November', 'December': 'Desember'
         }
-        start_dt = datetime.strptime(start, '%Y-%m-%d')
-        end_dt = datetime.strptime(end, '%Y-%m-%d')
+        try:
+            start_dt = datetime.strptime(start, '%Y-%m-%d')
+            end_dt = datetime.strptime(end, '%Y-%m-%d')
 
-        start_label = start_dt.strftime('%d %B %Y')
-        end_label = end_dt.strftime('%d %B %Y')
+            start_label = start_dt.strftime('%d %B %Y')
+            end_label = end_dt.strftime('%d %B %Y')
 
-        for en, idn in bulan_id.items():
-            start_label = start_label.replace(en, idn)
-            end_label = end_label.replace(en, idn)
+            for en, idn in bulan_id.items():
+                start_label = start_label.replace(en, idn)
+                end_label = end_label.replace(en, idn)
 
-        return f"{start_label} - {end_label}"
+            return f"{start_label} - {end_label}"
+        except Exception:
+            return "Tidak ada data"
 
+    # --- Ambil range dari request
     range1_start, range1_end = parse_range(range1)
     range2_start, range2_end = parse_range(range2)
 
+    # --- Kalau range1 kosong, fallback pakai min/max dari DB
     if not range1_start or not range1_end:
         min_tanggal = db.session.query(func.min(Ticket.tanggal)).scalar()
         max_tanggal = db.session.query(func.max(Ticket.tanggal)).scalar()
@@ -574,11 +573,13 @@ def filtering():
             range1_start = min_tanggal.strftime('%Y-%m-%d')
             range1_end = max_tanggal.strftime('%Y-%m-%d')
 
-    label_range1 = format_range_label(range1_start, range1_end)
+    # --- Label untuk chart
+    label_range1 = format_range_label(range1_start, range1_end) if range1_start and range1_end else "Tidak ada data"
     label_range2 = format_range_label(range2_start, range2_end) if range2_start and range2_end else None
+
     chart_title = f"Jumlah Perbandingan antar OS ({label_range1}" + (f" | {label_range2}" if label_range2 else "") + ")"
 
-
+    # --- Query data sesuai filter
     def get_filtered_data(start_date, end_date):
         query = Ticket.query
         query = query.filter(Ticket.nama_os.isnot(None)).filter(Ticket.nama_os != '')
@@ -614,18 +615,20 @@ def filtering():
 
         return os_totals, os_buckets
 
-    os_count1, bucket_info1 = get_filtered_data(range1_start, range1_end)
+    os_count1, bucket_info1 = get_filtered_data(range1_start, range1_end) if range1_start and range1_end else ({}, {})
     os_count2, bucket_info2 = get_filtered_data(range2_start, range2_end) if range2_start and range2_end else ({}, {})
 
+    # --- Gabung label OS dari kedua range
     chart_labels = sorted(list(set(os_count1.keys()) | set(os_count2.keys())))
 
+    # --- Siapkan data chart
     chart_series = []
- 
-    chart_series.append({
-        "name": label_range1,
-        "data": [os_count1.get(os, 0) for os in chart_labels],
-        "bucket_info": [bucket_info1.get(os, []) for os in chart_labels]
-    })
+    if os_count1:
+        chart_series.append({
+            "name": label_range1,
+            "data": [os_count1.get(os, 0) for os in chart_labels],
+            "bucket_info": [bucket_info1.get(os, []) for os in chart_labels]
+        })
 
     if os_count2:
         chart_series.append({
@@ -634,9 +637,11 @@ def filtering():
             "bucket_info": [bucket_info2.get(os, []) for os in chart_labels]
         })
 
+    # --- Data tambahan untuk filter dropdown
     list_os = db.session.query(Ticket.nama_os).distinct().all()
     list_bucket = db.session.query(Ticket.nama_bucket).distinct().all()
 
+    # --- Warna default chart
     default_colors = [
         "#1E90FF", "#28a745", "#ffc107", "#dc3545", "#6f42c1",
         "#20c997", "#fd7e14", "#6610f2", "#17a2b8", "#343a40"
@@ -644,7 +649,8 @@ def filtering():
     color_map = {label: default_colors[i % len(default_colors)] for i, label in enumerate(chart_labels)}
     chart_colors = [color_map[os] for os in chart_labels]
 
-    return render_template('filtering.html',
+    return render_template(
+        'filtering.html',
         user=current_user,
         chart_labels=chart_labels,
         chart_series=chart_series,
