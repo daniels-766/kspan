@@ -1,0 +1,88 @@
+#status_ticket
+1 = aktif
+2 = perpanjangan
+3 = keberatan
+4 = tutup
+5 = reopen
+
+#kategori_pengaduan
+1 = Rendah
+2 = Sedang
+3 = Tinggi
+
+#jenis_pengaduan
+1 = Informasi Pengajuan 
+2 = Permintaan Kode OTP
+3 = Informasi Tenor
+4 = Informasi Tagihan
+5 = Informasi Denda
+6 = Pembatalan Pinjaman
+7 = Informasi Pencairan Dana
+8 = Perilaku Petugas Penagihan
+9 = Informasi Pembayaran
+10 = Discount / Pemutihan
+
+#detail_pengaduan
+Informasi Pengajuan	
+	Hasil Pengajuan
+	Pengajuan Ditolak
+	Status Pengajuan sedang ditransfer
+	Tidak bisa pengajuan ulang karena keterlambatan
+	Verifikasi Bank gagal
+	Verifikasi KTP gagal
+	Cara pengajuan
+	Perubahan Nomor Handphone
+	Perubahan Nomor Rekening
+
+Permintaan Kode OTP	
+	OTP Limit
+	Tidak terima SMS OTP
+
+Informasi Tenor	
+	Informasi Pinjaman
+
+Informasi Tagihan	
+	Konsultasi detail pinjaman saat ini
+	Konsultasi Perpanjangan
+	Bukti Transfer
+
+Informasi Denda	
+	Denda Keterlambatan
+
+Pembatalan Pinjaman	
+	Hapus Data (Penutupan Akun)
+	Pembatalan Pinjaman
+
+Informasi Pencairan Dana	
+	Pencairan dana berhasil
+	Status pencairan dana gagal
+	Status pengajuan pencairan dana ulang
+	Tidak terima dana
+	Operasi Gagal (tidak bisa verifikasi wajah dan KTP)
+
+Perilaku Petugas Penagihan	
+	Keluhan Penagihan
+	Keluhan Reminder
+	Penipuan
+
+Informasi Pembayaran	
+	Konfirmasi Pembayaran
+	Pembayaran belum masuk
+	Pembayaran bukan ke VA UATAS
+	Refund (pembayaran double)
+	Meminta VA (cicilan)
+	Meminta VA (pelunasan)
+	Meminta VA (perpanjangan)
+	Tidak bisa ambil VA
+
+Discount/Pemutihan
+	Meminta keringanan pembayaran (cicilan)
+	Meminta keringanan pembayaran (potongan denda)
+	Tidak ada dana
+
+
+#tahapan
+Penanganan CS
+Eskalasi ke QC
+Eskalasi ke OPS
+Menunggu dokumen tambahan

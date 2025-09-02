@@ -1,0 +1,12 @@
+APScheduler
+Flask
+Flask-Login
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-APScheduler
+Werkzeug
+SQLAlchemy
+pandas
+python-dotenv
+pytz
+PyMySQL

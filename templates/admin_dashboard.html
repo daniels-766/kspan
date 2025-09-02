@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head><base href="">
+		<title>Admin Dashboard</title>
+        <meta name="description" content="Dashboard CS Uatas" />
+        <meta name="keywords" content="Dashboard CS Uatas" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta charset="utf-8" />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Metronic - Bootstrap 5 HTML, VueJS, React, Angular &amp; Laravel Admin Dashboard Theme" />
+		<meta property="og:url" content="https://keenthemes.com/metronic" />
+		<meta property="og:site_name" content="Keenthemes | Metronic" />
+		<link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+		<link rel="shortcut icon" href="../static/assets/logo/ksp.png" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+		<link href="../static/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="../static/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="../static/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+        <style>
+            .dataTables_paginate {
+                display: none;
+            }
+
+            .dataTables_length {
+                display: none;
+            }
+
+            .drp-calendar right {
+                display: none;
+            }
+
+            .daterangepicker .drp-calendar.right {
+                position: absolute !important;
+                right: 0 !important;
+                top: 0 !important;
+            }
+
+            .daterangepicker .drp-calendar.right tbody {
+                display: none !important;
+            }
+
+            .daterangepicker .drp-calendar.right thead>tr:nth-child(2) {
+                display: none !important;
+            }
+
+            .daterangepicker .drp-calendar.right th.month {
+                display: none !important;
+            }
+
+            .daterangepicker .drp-calendar.right .calendar-table {
+                background: transparent !important;
+            }
+
+            .daterangepicker .daterangepicker.ltr .ranges,
+            .daterangepicker.ltr .drp-calendar {
+                float: none !important;
+            }
+
+            .daterangepicker .drp-calendar.right .daterangepicker_input {
+                position: absolute !important;
+            }
+            .daterangepicker .drp-selected {
+                display: none;
+            }
+        </style>
+	</head>
+	<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed" style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
+		{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="alert-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+        {% for category, message in messages %}
+        <div class="alert 
+            {% if category == 'error' %}alert-danger
+            {% elif category == 'success' %}alert-success
+            {% else %}alert-info
+            {% endif %}
+            alert-dismissible fade show shadow-sm" role="alert" id="flash-alert-{{ loop.index }}">
+            <strong>
+                {% if category == 'success' %}Success!{% elif category == 'error' %}Error!{% else %}Notice!{% endif %}
+            </strong> {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+		<div class="d-flex flex-column flex-root">
+			<div class="page d-flex flex-row flex-column-fluid">
+				<div id="kt_aside" class="aside aside-dark aside-hoverable" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle">
+					<div class="aside-logo flex-column-auto" id="kt_aside_logo">
+						<span>
+							<img alt="Logo" src="../static/assets/logo/logos2.png" class="h-40px logo" />
+						</span>
+						<div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="aside-minimize">
+							<span class="svg-icon svg-icon-1 rotate-180">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<path opacity="0.5" d="M14.2657 11.4343L18.45 7.25C18.8642 6.83579 18.8642 6.16421 18.45 5.75C18.0358 5.33579 17.3642 5.33579 16.95 5.75L11.4071 11.2929C11.0166 11.6834 11.0166 12.3166 11.4071 12.7071L16.95 18.25C17.3642 18.6642 18.0358 18.6642 18.45 18.25C18.8642 17.8358 18.8642 17.1642 18.45 16.75L14.2657 12.5657C13.9533 12.2533 13.9533 11.7467 14.2657 11.4343Z" fill="black" />
+									<path d="M8.2657 11.4343L12.45 7.25C12.8642 6.83579 12.8642 6.16421 12.45 5.75C12.0358 5.33579 11.3642 5.33579 10.95 5.75L5.40712 11.2929C5.01659 11.6834 5.01659 12.3166 5.40712 12.7071L10.95 18.25C11.3642 18.6642 12.0358 18.6642 12.45 18.25C12.8642 17.8358 12.8642 17.1642 12.45 16.75L8.2657 12.5657C7.95328 12.2533 7.95328 11.7467 8.2657 11.4343Z" fill="black" />
+								</svg>
+							</span>
+						</div>
+					</div>
+					<div class="aside-menu flex-column-fluid">
+						<div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="0">
+							<div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
+								<div class="menu-item">
+									<div class="menu-content pb-2">
+										<span class="menu-section text-muted text-uppercase fs-8 ls-1">Dashboard</span>
+									</div>
+								</div>
+								<div class="menu-item">
+									<a class="menu-link active" href="{{ url_for('admin_dashboard') }}">
+										<span class="menu-icon">
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
+													<rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
+													<rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
+													<rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
+												</svg>
+											</span>
+										</span>
+										<span class="menu-title">Dashboard</span>
+									</a>
+								</div>
+                                <div class="menu-item">
+									<a class="menu-link" href="{{ url_for('admin_statistik') }}">
+										<span class="menu-icon">
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M13.0021 10.9128V3.01281C13.0021 2.41281 13.5021 1.91281 14.1021 2.01281C16.1021 2.21281 17.9021 3.11284 19.3021 4.61284C20.7021 6.01284 21.6021 7.91285 21.9021 9.81285C22.0021 10.4129 21.5021 10.9128 20.9021 10.9128H13.0021Z" fill="currentColor"/>
+                                                    <path opacity="0.3" d="M11.0021 13.7128V4.91283C11.0021 4.31283 10.5021 3.81283 9.90208 3.91283C5.40208 4.51283 1.90209 8.41284 2.00209 13.1128C2.10209 18.0128 6.40208 22.0128 11.3021 21.9128C13.1021 21.8128 14.7021 21.3128 16.0021 20.4128C16.5021 20.1128 16.6021 19.3128 16.1021 18.9128L11.0021 13.7128Z" fill="currentColor"/>
+                                                    <path opacity="0.3" d="M21.9021 14.0128C21.7021 15.6128 21.1021 17.1128 20.1021 18.4128C19.7021 18.9128 19.0021 18.9128 18.6021 18.5128L13.0021 12.9128H20.9021C21.5021 12.9128 22.0021 13.4128 21.9021 14.0128Z" fill="currentColor"/>
+                                                </svg>
+											</span>
+										</span>
+										<span class="menu-title">Statistik</span>
+									</a>
+								</div>
+                                <div class="menu-item">
+									<a class="menu-link" href="{{ url_for('filtering') }}">
+										<span class="menu-icon">
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path opacity="0.3" d="M14 3V21H10V3C10 2.4 10.4 2 11 2H13C13.6 2 14 2.4 14 3ZM7 14H5C4.4 14 4 14.4 4 15V21H8V15C8 14.4 7.6 14 7 14Z" fill="currentColor"/>
+                                                    <path d="M21 20H20V8C20 7.4 19.6 7 19 7H17C16.4 7 16 7.4 16 8V20H3C2.4 20 2 20.4 2 21C2 21.6 2.4 22 3 22H21C21.6 22 22 21.6 22 21C22 20.4 21.6 20 21 20Z" fill="currentColor"/>
+                                                </svg>
+											</span>
+										</span>
+										<span class="menu-title">Filtering</span>
+									</a>
+								</div>
+                                <!-- <div class="menu-item">
+									<a class="menu-link" href="{{ url_for('filtering_kanal') }}">
+										<span class="menu-icon">
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M13 5.91517C15.8 6.41517 18 8.81519 18 11.8152C18 12.5152 17.9 13.2152 17.6 13.9152L20.1 15.3152C20.6 15.6152 21.4 15.4152 21.6 14.8152C21.9 13.9152 22.1 12.9152 22.1 11.8152C22.1 7.01519 18.8 3.11521 14.3 2.01521C13.7 1.91521 13.1 2.31521 13.1 3.01521V5.91517H13Z" fill="currentColor"/>
+                                                    <path opacity="0.3" d="M19.1 17.0152C19.7 17.3152 19.8 18.1152 19.3 18.5152C17.5 20.5152 14.9 21.7152 12 21.7152C9.1 21.7152 6.50001 20.5152 4.70001 18.5152C4.30001 18.0152 4.39999 17.3152 4.89999 17.0152L7.39999 15.6152C8.49999 16.9152 10.2 17.8152 12 17.8152C13.8 17.8152 15.5 17.0152 16.6 15.6152L19.1 17.0152ZM6.39999 13.9151C6.19999 13.2151 6 12.5152 6 11.8152C6 8.81517 8.2 6.41515 11 5.91515V3.01519C11 2.41519 10.4 1.91519 9.79999 2.01519C5.29999 3.01519 2 7.01517 2 11.8152C2 12.8152 2.2 13.8152 2.5 14.8152C2.7 15.4152 3.4 15.7152 4 15.3152L6.39999 13.9151Z" fill="currentColor"/>
+                                                </svg>
+											</span>
+										</span>
+										<span class="menu-title">Filtering Kanal</span>
+									</a>
+								</div> -->
+                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+									<span class="menu-link">
+										<span class="menu-icon">
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<path opacity="0.3" d="M21 10.7192H3C2.4 10.7192 2 11.1192 2 11.7192C2 12.3192 2.4 12.7192 3 12.7192H6V14.7192C6 18.0192 8.7 20.7192 12 20.7192C15.3 20.7192 18 18.0192 18 14.7192V12.7192H21C21.6 12.7192 22 12.3192 22 11.7192C22 11.1192 21.6 10.7192 21 10.7192Z" fill="black" />
+													<path d="M11.6 21.9192C11.4 21.9192 11.2 21.8192 11 21.7192C10.6 21.4192 10.5 20.7191 10.8 20.3191C11.7 19.1191 12.3 17.8191 12.7 16.3191C12.8 15.8191 13.4 15.4192 13.9 15.6192C14.4 15.7192 14.8 16.3191 14.6 16.8191C14.2 18.5191 13.4 20.1192 12.4 21.5192C12.2 21.7192 11.9 21.9192 11.6 21.9192ZM8.7 19.7192C10.2 18.1192 11 15.9192 11 13.7192V8.71917C11 8.11917 11.4 7.71917 12 7.71917C12.6 7.71917 13 8.11917 13 8.71917V13.0192C13 13.6192 13.4 14.0192 14 14.0192C14.6 14.0192 15 13.6192 15 13.0192V8.71917C15 7.01917 13.7 5.71917 12 5.71917C10.3 5.71917 9 7.01917 9 8.71917V13.7192C9 15.4192 8.4 17.1191 7.2 18.3191C6.8 18.7191 6.9 19.3192 7.3 19.7192C7.5 19.9192 7.7 20.0192 8 20.0192C8.3 20.0192 8.5 19.9192 8.7 19.7192ZM6 16.7192C6.5 16.7192 7 16.2192 7 15.7192V8.71917C7 8.11917 7.1 7.51918 7.3 6.91918C7.5 6.41918 7.2 5.8192 6.7 5.6192C6.2 5.4192 5.59999 5.71917 5.39999 6.21917C5.09999 7.01917 5 7.81917 5 8.71917V15.7192V15.8191C5 16.3191 5.5 16.7192 6 16.7192ZM9 4.71917C9.5 4.31917 10.1 4.11918 10.7 3.91918C11.2 3.81918 11.5 3.21917 11.4 2.71917C11.3 2.21917 10.7 1.91916 10.2 2.01916C9.4 2.21916 8.59999 2.6192 7.89999 3.1192C7.49999 3.4192 7.4 4.11916 7.7 4.51916C7.9 4.81916 8.2 4.91918 8.5 4.91918C8.6 4.91918 8.8 4.81917 9 4.71917ZM18.2 18.9192C18.7 17.2192 19 15.5192 19 13.7192V8.71917C19 5.71917 17.1 3.1192 14.3 2.1192C13.8 1.9192 13.2 2.21917 13 2.71917C12.8 3.21917 13.1 3.81916 13.6 4.01916C15.6 4.71916 17 6.61917 17 8.71917V13.7192C17 15.3192 16.8 16.8191 16.3 18.3191C16.1 18.8191 16.4 19.4192 16.9 19.6192C17 19.6192 17.1 19.6192 17.2 19.6192C17.7 19.6192 18 19.3192 18.2 18.9192Z" fill="black" />
+												</svg>
+											</span>
+										</span>
+										<span class="menu-title">Detail Kanal</span>
+										<span class="menu-arrow"></span>
+									</span>
+									<div class="menu-sub menu-sub-accordion menu-active-bg">
+										<div class="menu-item">
+											<a class="menu-link" href="{{ url_for('kanal_email') }}">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">E-mail</span>
+											</a>
+										</div>
+										<div class="menu-item">
+											<a class="menu-link" href="{{ url_for('kanal_whatsapp') }}">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">WhatsApp</span>
+											</a>
+										</div>
+									</div>
+								</div>
+                                <div class="menu-item">
+									<a class="menu-link" href="{{ url_for('list_data') }}">
+										<span class="menu-icon">
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path opacity="0.3" d="M10 4H21C21.6 4 22 4.4 22 5V7H10V4Z" fill="currentColor"/>
+                                                    <path d="M9.2 3H3C2.4 3 2 3.4 2 4V19C2 19.6 2.4 20 3 20H21C21.6 20 22 19.6 22 19V7C22 6.4 21.6 6 21 6H12L10.4 3.60001C10.2 3.20001 9.7 3 9.2 3Z" fill="currentColor"/>
+                                                </svg>
+											</span>
+										</span>
+										<span class="menu-title">List Ticket</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+					<div id="kt_header" class="header align-items-stretch">
+						<div class="container-fluid d-flex align-items-stretch justify-content-between">
+							<div class="d-flex align-items-center d-lg-none ms-n3 me-1" title="Show aside menu">
+								<div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px" id="kt_aside_mobile_toggle">
+									<span class="svg-icon svg-icon-2x mt-1">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+											<path d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z" fill="black" />
+											<path opacity="0.3" d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z" fill="black" />
+										</svg>
+									</span>
+								</div>
+							</div>
+							<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
+								<a href="../../demo1/dist/index.html" class="d-lg-none">
+									<img alt="Logo" src="../static/assets/media/logos/logo-2.svg" class="h-30px" />
+								</a>
+							</div>
+							<div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
+								<div class="d-flex align-items-stretch" id="kt_header_nav">
+									<div class="header-menu align-items-stretch" data-kt-drawer="true" data-kt-drawer-name="header-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_header_menu_mobile_toggle" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav'}">
+										<div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch" id="#kt_header_menu" data-kt-menu="true">
+											<div class="menu-item me-lg-1">
+												<a class="menu-link active py-3" href="{{ url_for('admin_dashboard') }}">
+													<span class="menu-title">Dashboard</span>
+												</a>
+											</div>
+                                            <div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('admin_statistik') }}">
+													<span class="menu-title">Statistik</span>
+												</a>
+											</div>
+                                            <div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('filtering') }}">
+													<span class="menu-title">Filtering</span>
+												</a>
+											</div>
+                                            <!-- <div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('filtering_kanal') }}">
+													<span class="menu-title">Filtering Kanal</span>
+												</a>
+											</div> -->
+                                            <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-lg-1">
+                                                <span class="menu-link py-3">
+                                                    <span class="menu-title">Detail Kanal</span>
+                                                    <span class="menu-arrow d-lg-none"></span>
+                                                </span>
+                                                <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px">
+                                                    <div class="menu-item">
+                                                        <a class="menu-link py-3" href="{{ url_for('kanal_email') }}" title="Detail E-Mail Channel" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                                                            <span class="menu-icon">
+                                                                <span class="svg-icon svg-icon-2">
+                                                                    <img src="{{ url_for('static', filename='assets/logo/icons8-email.svg') }}" 
+                                                                        alt="WhatsApp" width="24" height="24">
+                                                                </span>
+                                                            </span>
+                                                            <span class="menu-title">E-Mail</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="menu-item">
+                                                        <a class="menu-link py-3" href="{{ url_for('kanal_whatsapp') }}" title="Detail WhatsApp Channel" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                                                            <span class="menu-icon">
+                                                                <span class="svg-icon svg-icon-2">
+                                                                    <img src="{{ url_for('static', filename='assets/logo/icons8-whatsapp.svg') }}" 
+                                                                        alt="WhatsApp" width="24" height="24">
+                                                                </span>
+                                                            </span>
+                                                            <span class="menu-title">WhatsApp</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('list_data') }}">
+													<span class="menu-title">List Ticket</span>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="d-flex align-items-stretch flex-shrink-0">
+									<div class="d-flex align-items-stretch flex-shrink-0">
+										<div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
+											<div class="cursor-pointer symbol symbol-30px symbol-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+												<img src="../static/assets/logo/ksp.png" alt="user" />
+											</div>
+											<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px" data-kt-menu="true">
+												<div class="menu-item px-3">
+													<div class="menu-content d-flex align-items-center px-3">
+														<div class="symbol symbol-50px me-5">
+															<img alt="Logo" src="../static/assets/logo/ksp.png" />
+														</div>
+														<div class="d-flex flex-column">
+															<div class="fw-bolder d-flex align-items-center fs-5">{{ user.username }}
+															<span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">{{ user.role }}</span></div>
+															<a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{ user.email }}</a>
+														</div>
+													</div>
+												</div>
+												<div class="menu-item px-5">
+													<a href="{{ url_for('logout') }}" class="menu-link px-5">Sign Out</a>
+												</div>
+											</div>
+										</div>
+										<div class="d-flex align-items-center d-lg-none ms-2 me-n3" title="Show header menu">
+											<div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px" id="kt_header_menu_mobile_toggle">
+												<span class="svg-icon svg-icon-1">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<path d="M13 11H3C2.4 11 2 10.6 2 10V9C2 8.4 2.4 8 3 8H13C13.6 8 14 8.4 14 9V10C14 10.6 13.6 11 13 11ZM22 5V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4V5C2 5.6 2.4 6 3 6H21C21.6 6 22 5.6 22 5Z" fill="black" />
+														<path opacity="0.3" d="M21 16H3C2.4 16 2 15.6 2 15V14C2 13.4 2.4 13 3 13H21C21.6 13 22 13.4 22 14V15C22 15.6 21.6 16 21 16ZM14 20V19C14 18.4 13.6 18 13 18H3C2.4 18 2 18.4 2 19V20C2 20.6 2.4 21 3 21H13C13.6 21 14 20.6 14 20Z" fill="black" />
+													</svg>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+                    <div class="modal fade" id="kt_customers_export_modal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered mw-650px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="fw-bolder">Export Ticket</h2>
+                                </div>
+                                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                                    <form id="kt_customers_export_form" class="form" method="GET"
+                                        action="{{ url_for('export_ticket_excel') }}">
+                                        <div class="fv-row mb-10">
+                                            <label class="fs-5 fw-bold form-label mb-5">Select Date
+                                                Range:</label>
+                                            <input class="form-control form-control-solid"
+                                                placeholder="Pick a date" name="date" id="date_range_input" />
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary">
+                                                <span>Export</span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+						<div class="toolbar" id="kt_toolbar">
+							<div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+								<div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+									<h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">List User
+									<span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
+									<small class="text-muted fs-7 fw-bold my-1 ms-1">{{ user.role }}</small>
+								</div>
+							</div>
+						</div>
+						<div class="post d-flex flex-column-fluid" id="kt_post">
+                        <div id="kt_content_container" class="container-xxl">
+                            <div class="card">
+                                <div class="card-header border-0 pt-6">
+                                    <div class="card-title">
+                                        <div class="d-flex align-items-center position-relative my-1">
+                                            <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                                                
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="card-toolbar">
+                                        <div class="d-flex justify-content-end gap-2" data-kt-user-table-toolbar="base">
+                                            <!-- Export Button -->
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#kt_customers_export_modal">
+                                                <span class="svg-icon svg-icon-2 me-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none">
+                                                        <rect opacity="0.3" x="12.75" y="4.25" width="12" height="2"
+                                                            rx="1" transform="rotate(90 12.75 4.25)" fill="black" />
+                                                        <path
+                                                            d="M12.0573 6.11875L13.5203 7.87435C13.9121 8.34457 14.6232 8.37683 15.056 7.94401C15.4457 7.5543 15.4641 6.92836 15.0979 6.51643L12.4974 3.59084C12.0996 3.14332 11.4004 3.14332 11.0026 3.59084L8.40206 6.51643C8.0359 6.92836 8.0543 7.5543 8.44401 7.94401C8.87683 8.37683 9.58785 8.34458 9.9797 7.87435L11.4427 6.11875C11.6026 5.92684 11.8974 5.92684 12.0573 6.11875Z"
+                                                            fill="black" />
+                                                        <path
+                                                            d="M18.75 8.25H17.75C17.1977 8.25 16.75 8.69772 16.75 9.25C16.75 9.80228 17.1977 10.25 17.75 10.25C18.3023 10.25 18.75 10.6977 18.75 11.25V18.25C18.75 18.8023 18.3023 19.25 17.75 19.25H5.75C5.19772 19.25 4.75 18.8023 4.75 18.25V11.25C4.75 10.6977 5.19771 10.25 5.75 10.25C6.30229 10.25 6.75 9.80228 6.75 9.25C6.75 8.69772 6.30229 8.25 5.75 8.25H4.75C3.64543 8.25 2.75 9.14543 2.75 10.25V19.25C2.75 20.3546 3.64543 21.25 4.75 21.25H18.75C19.8546 21.25 20.75 20.3546 20.75 19.25V10.25C20.75 9.14543 19.8546 8.25 18.75 8.25Z"
+                                                            fill="#C4C4C4" />
+                                                    </svg>
+                                                </span>
+                                                Export Ticket
+                                            </button>
+
+                                            <!-- Add User Button -->
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
+                                                <span class="svg-icon svg-icon-2 me-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none">
+                                                        <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2"
+                                                            rx="1" transform="rotate(-90 11.364 20.364)" fill="black" />
+                                                        <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
+                                                            fill="black" />
+                                                    </svg>
+                                                </span>
+                                                Add User
+                                            </button>
+                                        </div>
+                                        <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered mw-650px">
+                                                <div class="modal-content">
+                                                    <div class="modal-header" id="kt_modal_add_user_header">
+                                                        <h2 class="fw-bolder">Add User</h2>
+                                                        <div class="btn btn-icon btn-sm btn-active-icon-primary"
+                                                            data-kt-users-modal-action="close">
+                                                            <span class="svg-icon svg-icon-1">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none">
+                                                                    <rect opacity="0.5" x="6" y="17.3137" width="16"
+                                                                        height="2" rx="1"
+                                                                        transform="rotate(-45 6 17.3137)"
+                                                                        fill="black" />
+                                                                    <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                                                        transform="rotate(45 7.41422 6)" fill="black" />
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                                                        <form method="POST" action="{{ url_for('add_user') }}">
+                                                            <div class="fv-row mb-7">
+                                                                <label
+                                                                    class="required fw-bold fs-6 mb-2">Username</label>
+                                                                <input type="text" name="username"
+                                                                    class="form-control form-control-solid"
+                                                                    placeholder="Username" required />
+                                                            </div>
+                                                            <div class="fv-row mb-7">
+                                                                <label class="required fw-bold fs-6 mb-2">Phone
+                                                                    Number</label>
+                                                                <input type="text" name="phone"
+                                                                    class="form-control form-control-solid"
+                                                                    placeholder="Phone Number" required />
+                                                            </div>
+                                                            <div class="fv-row mb-7">
+                                                                <label class="required fw-bold fs-6 mb-2">Email</label>
+                                                                <input type="email" name="email"
+                                                                    class="form-control form-control-solid"
+                                                                    placeholder="Email" required />
+                                                            </div>
+                                                            <div class="fv-row mb-7">
+                                                                <label class="d-flex align-items-center fs-5 fw-bold mb-4">
+                                                                    <span class="required">Select Role</span>
+                                                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Select Role"></i>
+                                                                </label>
+                                                                <div class="col-lg-8 fv-row">
+                                                                    <div class="d-flex align-items-center mt-3">
+                                                                        <label class="form-check form-check-inline form-check-solid me-5">
+                                                                            <input class="form-check-input" name="role" type="radio" value="staff" />
+                                                                            <span class="fw-bold ps-2 fs-6">Staff CS</span>
+                                                                        </label>
+                                                                        <label class="form-check form-check-inline form-check-solid">
+                                                                            <input class="form-check-input" name="role" type="radio" value="qc" />
+                                                                            <span class="fw-bold ps-2 fs-6">QC</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="fv-row mb-7">
+                                                                <label
+                                                                    class="required fw-bold fs-6 mb-2">Password</label>
+                                                                <input type="password" name="password"
+                                                                    class="form-control form-control-solid"
+                                                                    placeholder="Password" required />
+                                                            </div>
+                                                            <div class="text-center pt-15">
+                                                                <button type="reset" class="btn btn-light me-3"
+                                                                    data-bs-dismiss="modal">Discard</button>
+                                                                <button type="submit" class="btn btn-primary">
+                                                                    <span class="indicator-label">Submit</span>
+                                                                </button>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-0" style="height: 550px; overflow-y : scroll;">
+                                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                                        <thead>
+                                            <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                                                <th class="min-w-125px">Nama Staff</th>
+                                                <th class="min-w-125px">Email</th>
+                                                <th class="min-w-125px">Nomor Hp</th>
+                                                <th class="min-w-125px">Role</th>
+                                                <th class="min-w-100px">Hapus</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-gray-600 fw-bold">
+                                            {% for u in users %}
+                                            <tr>
+                                                <td>
+                                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">{{
+                                                        u.username }}</a>
+                                                </td>
+                                                <td>{{ u.email }}</td>
+                                                <td>{{ u.phone }}</td>
+                                                <td>{{ u.role }}</td>
+                                                <td>
+                                                    <div class="d-flex flex-shrink-0">
+                                                        <form id="delete-form-{{ u.id }}" action="{{ url_for('delete_user', user_id=u.id) }}" method="POST" style="display: inline;">
+                                                            <button type="button"
+                                                                class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
+                                                                onclick="confirmDelete('{{ u.id }}')">
+                                                                <span class="svg-icon svg-icon-3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                        height="16" fill="currentColor"
+                                                                        class="bi bi-trash" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                                        <path
+                                                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                                                    </svg>
+                                                                </span>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					</div>
+					<div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
+                    <div
+                        class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
+                        <div class="text-dark order-2 order-md-1">
+                            <span class="text-muted fw-bold me-1">2025©</span>
+                            <a href="https://ksparthaniaga.com/" target="_blank"
+                                class="text-gray-800 text-hover-primary">KSP Artha Niaga
+                            </a>
+                        </div>
+                    </div>
+                </div>
+				</div>
+			</div>
+		</div>
+		<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+			<span class="svg-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+					<rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="black" />
+					<path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="black" />
+				</svg>
+			</span>
+		</div>
+		<script>var hostUrl = "../static/assets/";</script>
+		<script src="../static/assets/plugins/global/plugins.bundle.js"></script>
+		<script src="../static/assets/js/scripts.bundle.js"></script>
+		<script src="../static/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+		<script src="../static/assets/js/custom/widgets.js"></script>
+		<script src="../static/assets/js/custom/apps/chat/chat.js"></script>
+		<script src="../static/assets/js/custom/modals/create-app.js"></script>
+		<script src="../static/assets/js/custom/modals/upgrade-plan.js"></script>
+        <script src="../static/assets/js/security/security-summary.js"></script>
+        <script src="../static/assets/js/security/license-usage.js"></script>
+        <script>
+            $(function () {
+                $('input[name="date"]').daterangepicker({
+                    autoUpdateInput: false,
+                    locale: {
+                        cancelLabel: 'Clear',
+                        format: 'YYYY-MM-DD'
+                    }
+                });
+
+                $('input[name="date"]').on('apply.daterangepicker', function (ev, picker) {
+                    $(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+                });
+
+                $('input[name="date"]').on('cancel.daterangepicker', function (ev, picker) {
+                    $(this).val('');
+                });
+            });
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            function confirmDelete(userId) {
+                Swal.fire({
+                    title: 'Apakah kamu yakin?',
+                    text: "User ini akan dihapus!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('delete-form-' + userId).submit();
+                    }
+                });
+            }
+        </script>
+	</body>
+</html>

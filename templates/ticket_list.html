@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="">
+    <title>Active Ticket</title>
+    <meta name="description" content="Dashboard CS Uatas" />
+    <meta name="keywords" content="Dashboard CS Uatas" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title"
+        content="Metronic - Bootstrap 5 HTML, VueJS, React, Angular &amp; Laravel Admin Dashboard Theme" />
+    <meta property="og:url" content="https://keenthemes.com/metronic" />
+    <meta property="og:site_name" content="Keenthemes | Metronic" />
+    <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+    <link rel="shortcut icon" href="../static/assets/logo/ksp.png" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <link href="../static/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="../static/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="../static/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="../static/assets/plugins/custom/leaflet/leaflet.bundle.css" rel="stylesheet" type="text/css" />
+    <style>
+        .dataTables_paginate {
+            display: none;
+        }
+
+        .dataTables_length {
+            display: none;
+        }
+
+        .drp-calendar right {
+            display: none;
+        }
+
+        /* REMOVE SECOND CALENDAR */
+
+        .daterangepicker .drp-calendar.right {
+            position: absolute !important;
+            right: 0 !important;
+            top: 0 !important;
+        }
+
+        .daterangepicker .drp-calendar.right tbody {
+            display: none !important;
+        }
+
+        .daterangepicker .drp-calendar.right thead>tr:nth-child(2) {
+            display: none !important;
+        }
+
+        .daterangepicker .drp-calendar.right th.month {
+            display: none !important;
+        }
+
+        .daterangepicker .drp-calendar.right .calendar-table {
+            background: transparent !important;
+        }
+
+        .daterangepicker .daterangepicker.ltr .ranges,
+        .daterangepicker.ltr .drp-calendar {
+            float: none !important;
+        }
+
+        .daterangepicker .drp-calendar.right .daterangepicker_input {
+            position: absolute !important;
+        }
+
+        .daterangepicker .drp-selected {
+            display: none;
+        }
+
+        /* REMOVE SECOND CALENDAR */
+    </style>
+
+</head>
+
+<body id="kt_body"
+    class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed"
+    style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="alert-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+        {% for category, message in messages %}
+        <div class="alert 
+            {% if category == 'error' %}alert-danger
+            {% elif category == 'success' %}alert-success
+            {% else %}alert-info
+            {% endif %}
+            alert-dismissible fade show shadow-sm" role="alert" id="flash-alert-{{ loop.index }}">
+            <strong>
+                {% if category == 'success' %}Success!{% elif category == 'error' %}Error!{% else %}Notice!{% endif %}
+            </strong> {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+    <div class="d-flex flex-column flex-root">
+        <div class="page d-flex flex-row flex-column-fluid">
+            <div id="kt_aside" class="aside aside-dark aside-hoverable" data-kt-drawer="true"
+                data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}"
+                data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}"
+                data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle">
+                <div class="aside-logo flex-column-auto" id="kt_aside_logo">
+                    <span href="">
+                        <img alt="Logo" src="../static/assets/logo/logos2.png" class="h-40px logo" />
+                    </span>
+                    <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle"
+                        data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body"
+                        data-kt-toggle-name="aside-minimize">
+                        <span class="svg-icon svg-icon-1 rotate-180">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none">
+                                <path opacity="0.5"
+                                    d="M14.2657 11.4343L18.45 7.25C18.8642 6.83579 18.8642 6.16421 18.45 5.75C18.0358 5.33579 17.3642 5.33579 16.95 5.75L11.4071 11.2929C11.0166 11.6834 11.0166 12.3166 11.4071 12.7071L16.95 18.25C17.3642 18.6642 18.0358 18.6642 18.45 18.25C18.8642 17.8358 18.8642 17.1642 18.45 16.75L14.2657 12.5657C13.9533 12.2533 13.9533 11.7467 14.2657 11.4343Z"
+                                    fill="black" />
+                                <path
+                                    d="M8.2657 11.4343L12.45 7.25C12.8642 6.83579 12.8642 6.16421 12.45 5.75C12.0358 5.33579 11.3642 5.33579 10.95 5.75L5.40712 11.2929C5.01659 11.6834 5.01659 12.3166 5.40712 12.7071L10.95 18.25C11.3642 18.6642 12.0358 18.6642 12.45 18.25C12.8642 17.8358 12.8642 17.1642 12.45 16.75L8.2657 12.5657C7.95328 12.2533 7.95328 11.7467 8.2657 11.4343Z"
+                                    fill="black" />
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+                <div class="aside-menu flex-column-fluid">
+                    <div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true"
+                        data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto"
+                        data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer"
+                        data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="0">
+                        <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500"
+                            id="#kt_aside_menu" data-kt-menu="true">
+                            <div class="menu-item">
+                                <div class="menu-content pb-2">
+                                    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Dashboard</span>
+                                </div>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ url_for('admin_dashboard') }}">
+                                    <span class="menu-icon">
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none">
+                                                <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
+                                                <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2"
+                                                    fill="black" />
+                                                <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2"
+                                                    fill="black" />
+                                                <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2"
+                                                    fill="black" />
+                                            </svg>
+                                        </span>
+                                    </span>
+                                    <span class="menu-title">Dashboard</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ url_for('admin_statistik') }}">
+                                    <span class="menu-icon">
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none">
+                                                <path
+                                                    d="M13.0021 10.9128V3.01281C13.0021 2.41281 13.5021 1.91281 14.1021 2.01281C16.1021 2.21281 17.9021 3.11284 19.3021 4.61284C20.7021 6.01284 21.6021 7.91285 21.9021 9.81285C22.0021 10.4129 21.5021 10.9128 20.9021 10.9128H13.0021Z"
+                                                    fill="currentColor" />
+                                                <path opacity="0.3"
+                                                    d="M11.0021 13.7128V4.91283C11.0021 4.31283 10.5021 3.81283 9.90208 3.91283C5.40208 4.51283 1.90209 8.41284 2.00209 13.1128C2.10209 18.0128 6.40208 22.0128 11.3021 21.9128C13.1021 21.8128 14.7021 21.3128 16.0021 20.4128C16.5021 20.1128 16.6021 19.3128 16.1021 18.9128L11.0021 13.7128Z"
+                                                    fill="currentColor" />
+                                                <path opacity="0.3"
+                                                    d="M21.9021 14.0128C21.7021 15.6128 21.1021 17.1128 20.1021 18.4128C19.7021 18.9128 19.0021 18.9128 18.6021 18.5128L13.0021 12.9128H20.9021C21.5021 12.9128 22.0021 13.4128 21.9021 14.0128Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </span>
+                                    <span class="menu-title">Statistik</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ url_for('filtering') }}">
+                                    <span class="menu-icon">
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none">
+                                                <path opacity="0.3"
+                                                    d="M14 3V21H10V3C10 2.4 10.4 2 11 2H13C13.6 2 14 2.4 14 3ZM7 14H5C4.4 14 4 14.4 4 15V21H8V15C8 14.4 7.6 14 7 14Z"
+                                                    fill="currentColor" />
+                                                <path
+                                                    d="M21 20H20V8C20 7.4 19.6 7 19 7H17C16.4 7 16 7.4 16 8V20H3C2.4 20 2 20.4 2 21C2 21.6 2.4 22 3 22H21C21.6 22 22 21.6 22 21C22 20.4 21.6 20 21 20Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </span>
+                                    <span class="menu-title">Filtering</span>
+                                </a>
+                            </div>
+                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none">
+                                                <path opacity="0.3"
+                                                    d="M21 10.7192H3C2.4 10.7192 2 11.1192 2 11.7192C2 12.3192 2.4 12.7192 3 12.7192H6V14.7192C6 18.0192 8.7 20.7192 12 20.7192C15.3 20.7192 18 18.0192 18 14.7192V12.7192H21C21.6 12.7192 22 12.3192 22 11.7192C22 11.1192 21.6 10.7192 21 10.7192Z"
+                                                    fill="black" />
+                                                <path
+                                                    d="M11.6 21.9192C11.4 21.9192 11.2 21.8192 11 21.7192C10.6 21.4192 10.5 20.7191 10.8 20.3191C11.7 19.1191 12.3 17.8191 12.7 16.3191C12.8 15.8191 13.4 15.4192 13.9 15.6192C14.4 15.7192 14.8 16.3191 14.6 16.8191C14.2 18.5191 13.4 20.1192 12.4 21.5192C12.2 21.7192 11.9 21.9192 11.6 21.9192ZM8.7 19.7192C10.2 18.1192 11 15.9192 11 13.7192V8.71917C11 8.11917 11.4 7.71917 12 7.71917C12.6 7.71917 13 8.11917 13 8.71917V13.0192C13 13.6192 13.4 14.0192 14 14.0192C14.6 14.0192 15 13.6192 15 13.0192V8.71917C15 7.01917 13.7 5.71917 12 5.71917C10.3 5.71917 9 7.01917 9 8.71917V13.7192C9 15.4192 8.4 17.1191 7.2 18.3191C6.8 18.7191 6.9 19.3192 7.3 19.7192C7.5 19.9192 7.7 20.0192 8 20.0192C8.3 20.0192 8.5 19.9192 8.7 19.7192ZM6 16.7192C6.5 16.7192 7 16.2192 7 15.7192V8.71917C7 8.11917 7.1 7.51918 7.3 6.91918C7.5 6.41918 7.2 5.8192 6.7 5.6192C6.2 5.4192 5.59999 5.71917 5.39999 6.21917C5.09999 7.01917 5 7.81917 5 8.71917V15.7192V15.8191C5 16.3191 5.5 16.7192 6 16.7192ZM9 4.71917C9.5 4.31917 10.1 4.11918 10.7 3.91918C11.2 3.81918 11.5 3.21917 11.4 2.71917C11.3 2.21917 10.7 1.91916 10.2 2.01916C9.4 2.21916 8.59999 2.6192 7.89999 3.1192C7.49999 3.4192 7.4 4.11916 7.7 4.51916C7.9 4.81916 8.2 4.91918 8.5 4.91918C8.6 4.91918 8.8 4.81917 9 4.71917ZM18.2 18.9192C18.7 17.2192 19 15.5192 19 13.7192V8.71917C19 5.71917 17.1 3.1192 14.3 2.1192C13.8 1.9192 13.2 2.21917 13 2.71917C12.8 3.21917 13.1 3.81916 13.6 4.01916C15.6 4.71916 17 6.61917 17 8.71917V13.7192C17 15.3192 16.8 16.8191 16.3 18.3191C16.1 18.8191 16.4 19.4192 16.9 19.6192C17 19.6192 17.1 19.6192 17.2 19.6192C17.7 19.6192 18 19.3192 18.2 18.9192Z"
+                                                    fill="black" />
+                                            </svg>
+                                        </span>
+                                    </span>
+                                    <span class="menu-title">Detail Kanal</span>
+                                    <span class="menu-arrow"></span>
+                                </span>
+                                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                                    <div class="menu-item">
+                                        <a class="menu-link" href="{{ url_for('kanal_email') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">E-mail</span>
+                                        </a>
+                                    </div>
+                                    <div class="menu-item">
+                                        <a class="menu-link" href="{{ url_for('kanal_whatsapp') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">WhatsApp</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link active" href="{{ url_for('list_data') }}">
+                                    <span class="menu-icon">
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none">
+                                                <path opacity="0.3" d="M10 4H21C21.6 4 22 4.4 22 5V7H10V4Z"
+                                                    fill="currentColor" />
+                                                <path
+                                                    d="M9.2 3H3C2.4 3 2 3.4 2 4V19C2 19.6 2.4 20 3 20H21C21.6 20 22 19.6 22 19V7C22 6.4 21.6 6 21 6H12L10.4 3.60001C10.2 3.20001 9.7 3 9.2 3Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    </span>
+                                    <span class="menu-title">List Ticket</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+                <div id="kt_header" class="header align-items-stretch">
+                    <div class="container-fluid d-flex align-items-stretch justify-content-between">
+                        <div class="d-flex align-items-center d-lg-none ms-n3 me-1" title="Show aside menu">
+                            <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
+                                id="kt_aside_mobile_toggle">
+                                <span class="svg-icon svg-icon-2x mt-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none">
+                                        <path
+                                            d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z"
+                                            fill="black" />
+                                        <path opacity="0.3"
+                                            d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z"
+                                            fill="black" />
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
+                            <a href="../../demo1/dist/index.html" class="d-lg-none">
+                                <img alt="Logo" src="../static/assets/media/logos/logo-2.svg" class="h-30px" />
+                            </a>
+                        </div>
+                        <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
+                            <div class="d-flex align-items-stretch" id="kt_header_nav">
+                                <div class="header-menu align-items-stretch" data-kt-drawer="true"
+                                    data-kt-drawer-name="header-menu"
+                                    data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true"
+                                    data-kt-drawer-width="{default:'200px', '300px': '250px'}"
+                                    data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_header_menu_mobile_toggle"
+                                    data-kt-swapper="true" data-kt-swapper-mode="prepend"
+                                    data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav'}">
+                                    <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch"
+                                        id="#kt_header_menu" data-kt-menu="true">
+                                        <div class="menu-item me-lg-1">
+                                            <a class="menu-link py-3" href="{{ url_for('admin_dashboard') }}">
+                                                <span class="menu-title">Dashboard</span>
+                                            </a>
+                                        </div>
+                                        <div class="menu-item me-lg-1">
+                                            <a class="menu-link py-3" href="{{ url_for('admin_statistik') }}">
+                                                <span class="menu-title">Statistik</span>
+                                            </a>
+                                        </div>
+                                        <div class="menu-item me-lg-1">
+                                            <a class="menu-link py-3" href="{{ url_for('filtering') }}">
+                                                <span class="menu-title">Filtering</span>
+                                            </a>
+                                        </div>
+                                        <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start"
+                                            class="menu-item menu-lg-down-accordion me-lg-1">
+                                            <span class="menu-link py-3">
+                                                <span class="menu-title">Detail Kanal</span>
+                                                <span class="menu-arrow d-lg-none"></span>
+                                            </span>
+                                            <div
+                                                class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px">
+                                                <div class="menu-item">
+                                                    <a class="menu-link py-3" href="{{ url_for('kanal_email') }}"
+                                                        title="Detail E-Mail Channel" data-bs-toggle="tooltip"
+                                                        data-bs-trigger="hover" data-bs-dismiss="click"
+                                                        data-bs-placement="right">
+                                                        <span class="menu-icon">
+                                                            <span class="svg-icon svg-icon-2">
+                                                                <img src="{{ url_for('static', filename='assets/logo/icons8-email.svg') }}"
+                                                                    alt="WhatsApp" width="24" height="24">
+                                                            </span>
+                                                        </span>
+                                                        <span class="menu-title">E-Mail</span>
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item">
+                                                    <a class="menu-link py-3" href="{{ url_for('kanal_whatsapp') }}"
+                                                        title="Detail WhatsApp Channel" data-bs-toggle="tooltip"
+                                                        data-bs-trigger="hover" data-bs-dismiss="click"
+                                                        data-bs-placement="right">
+                                                        <span class="menu-icon">
+                                                            <span class="svg-icon svg-icon-2">
+                                                                <img src="{{ url_for('static', filename='assets/logo/icons8-whatsapp.svg') }}"
+                                                                    alt="WhatsApp" width="24" height="24">
+                                                            </span>
+                                                        </span>
+                                                        <span class="menu-title">WhatsApp</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="menu-item me-lg-1">
+                                            <a class="menu-link active py-3" href="{{ url_for('list_data') }}">
+                                                <span class="menu-title">List Ticket</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-stretch flex-shrink-0">
+                                <div class="d-flex align-items-stretch flex-shrink-0">
+                                    <div class="d-flex align-items-center ms-1 ms-lg-3">
+                                        <div class="btn btn-icon btn-active-light-primary position-relative w-30px h-30px w-md-40px h-md-40px"
+                                            data-kt-menu-trigger="click" data-kt-menu-attach="parent"
+                                            data-kt-menu-placement="bottom-end">
+                                            <span class="svg-icon svg-icon-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none">
+                                                    <path opacity="0.3"
+                                                        d="M20 3H4C2.89543 3 2 3.89543 2 5V16C2 17.1046 2.89543 18 4 18H4.5C5.05228 18 5.5 18.4477 5.5 19V21.5052C5.5 22.1441 6.21212 22.5253 6.74376 22.1708L11.4885 19.0077C12.4741 18.3506 13.6321 18 14.8167 18H20C21.1046 18 22 17.1046 22 16V5C22 3.89543 21.1046 3 20 3Z"
+                                                        fill="black" />
+                                                    <rect x="6" y="12" width="7" height="2" rx="1" fill="black" />
+                                                    <rect x="6" y="7" width="12" height="2" rx="1" fill="black" />
+                                                </svg>
+                                            </span>
+                                            <span
+                                                class="bullet bullet-dot bg-danger h-8px w-8px position-absolute translate-middle top-0 start-50 animation-blink"></span>
+                                        </div>
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px"
+                                            data-kt-menu="true">
+                                            <div class="d-flex flex-column bgi-no-repeat rounded-top"
+                                                style="background-image:url('../static/assets/media/misc/pattern-1.jpg')">
+                                                <h3 class="text-white fw-bold px-9 mt-10 mb-6">SLA
+                                                    <span class="fs-8 opacity-75 ps-3">{{ sla_warning_tickets|length }}
+                                                        reports</span>
+                                                </h3>
+                                                <ul class="nav nav-line-tabs nav-line-tabs-2x nav-stretch fw-bold px-9">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link text-white opacity-75 opacity-state-100 pb-4 active"
+                                                            data-bs-toggle="tab" href="#kt_topbar_notifications_3">SLA
+                                                            Information</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade show active" id="kt_topbar_notifications_3"
+                                                    role="tabpanel">
+                                                    <div class="scroll-y mh-325px my-5 px-8">
+                                                        {% for ticket in sla_warning_tickets %}
+                                                        <div class="d-flex flex-stack py-4">
+                                                            <div class="d-flex align-items-center me-2">
+                                                                <span class="w-70px badge 
+																		{% if ticket.sla == 3 %} badge-light-success
+																		{% elif ticket.sla == 2 %} badge-light-danger
+																		{% elif ticket.sla == 1 %} badge-light-warning
+																		{% endif %}
+																		me-4">sisa sla {{ ticket.sla }}</span>
+                                                                <span class="text-gray-800 text-hover-primary fw-bold">
+                                                                    {{ ticket.nomor_ticket.nomor_ticket }}
+                                                                </span>
+                                                            </div>
+                                                            <span class="badge badge-light fs-8">sisa sla {{ ticket.sla
+                                                                }}</span>
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
+                                        <div class="cursor-pointer symbol symbol-30px symbol-md-40px"
+                                            data-kt-menu-trigger="click" data-kt-menu-attach="parent"
+                                            data-kt-menu-placement="bottom-end">
+                                            <img src="../static/assets/logo/ksp.png" alt="user" />
+                                        </div>
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
+                                            data-kt-menu="true">
+                                            <div class="menu-item px-3">
+                                                <div class="menu-content d-flex align-items-center px-3">
+                                                    <div class="symbol symbol-50px me-5">
+                                                        <img alt="Logo" src="../static/assets/logo/ksp.png" />
+                                                    </div>
+                                                    <div class="d-flex flex-column">
+                                                        <div class="fw-bolder d-flex align-items-center fs-5">{{
+                                                            user.username }}
+                                                            <span
+                                                                class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">{{
+                                                                user.role }}</span>
+                                                        </div>
+                                                        <a href="#"
+                                                            class="fw-bold text-muted text-hover-primary fs-7">{{
+                                                            user.email }}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="menu-item px-5">
+                                                <a href="{{ url_for('logout') }}" class="menu-link px-5">Sign Out</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center d-lg-none ms-2 me-n3"
+                                        title="Show header menu">
+                                        <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
+                                            id="kt_header_menu_mobile_toggle">
+                                            <span class="svg-icon svg-icon-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none">
+                                                    <path
+                                                        d="M13 11H3C2.4 11 2 10.6 2 10V9C2 8.4 2.4 8 3 8H13C13.6 8 14 8.4 14 9V10C14 10.6 13.6 11 13 11ZM22 5V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4V5C2 5.6 2.4 6 3 6H21C21.6 6 22 5.6 22 5Z"
+                                                        fill="black" />
+                                                    <path opacity="0.3"
+                                                        d="M21 16H3C2.4 16 2 15.6 2 15V14C2 13.4 2.4 13 3 13H21C21.6 13 22 13.4 22 14V15C22 15.6 21.6 16 21 16ZM14 20V19C14 18.4 13.6 18 13 18H3C2.4 18 2 18.4 2 19V20C2 20.6 2.4 21 3 21H13C13.6 21 14 20.6 14 20Z"
+                                                        fill="black" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                    <div class="toolbar" id="kt_toolbar">
+                        <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+                            <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
+                                data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
+                                class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Ticket List</h1>
+                                <span class="h-20px border-gray-200 border-start mx-4"></span>
+                                <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                                    <li class="breadcrumb-item text-dark">Jumlah Tiket Aktif : {{ jumlah_tiket_aktif }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post d-flex flex-column-fluid" id="kt_post">
+                        <div id="kt_content_container" class="container-xxl">
+                            <div class="card">
+                                <div class="card-header border-0 pt-6">
+                                    <div class="card-title">
+                                        <form method="GET" action="{{ url_for('list_data') }}">
+                                            <div class="d-flex align-items-center position-relative my-1">
+                                                <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                                                    <!-- ikon search -->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none">
+                                                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546"
+                                                            height="2" rx="1" transform="rotate(45 17.0365 15.1223)"
+                                                            fill="black" />
+                                                        <path
+                                                            d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+                                                            fill="black" />
+                                                    </svg>
+                                                </span>
+                                                <input type="text" name="q"
+                                                    class="form-control form-control-solid w-250px ps-15"
+                                                    placeholder="Cari Nomor Tiket"
+                                                    value="{{ request.args.get('q', '') }}">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="card-toolbar">
+                                        <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+                                            <button type="button" class="btn btn-light-primary me-3"
+                                                data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                                <span class="svg-icon svg-icon-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none">
+                                                        <path
+                                                            d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z"
+                                                            fill="black" />
+                                                    </svg>
+                                                </span>Filter</button>
+                                            <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px"
+                                                data-kt-menu="true">
+                                                <form method="get" action="{{ url_for('list_data') }}">
+                                                    <div class="px-7 py-5">
+                                                        <div class="fs-4 text-dark fw-bolder">Filter Options</div>
+                                                    </div>
+                                                    <div class="separator border-gray-200"></div>
+                                                    <div class="px-7 py-5">
+                                                        <div class="mb-10">
+                                                            <label class="form-label fs-5 fw-bold mb-3">Kanal
+                                                                Pengaduan:</label>
+                                                            <select class="form-select form-select-solid fw-bolder"
+                                                                data-kt-select2="true" data-placeholder="Select option"
+                                                                name="jenis">
+                                                                <option></option>
+                                                                <option value="whatsapp">WhatsApp </option>
+                                                                <option value="email">Email</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-10">
+                                                            <label class="form-label fs-5 fw-bold mb-3">Status:</label>
+                                                            <select class="form-select form-select-solid fw-bolder"
+                                                                data-kt-select2="true" data-placeholder="Select option"
+                                                                name="status">
+                                                                <option></option>
+                                                                <option value="1">Open</option>
+                                                                <option value="2">In-Progress</option>
+                                                                <option value="3">Pending</option>
+                                                                <option value="5">Resolved</option>
+                                                                <option value="4">Closed</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-10">
+                                                            <label class="form-label fs-5 fw-bold mb-3">Tanggal Aduan
+                                                                Masuk:</label>
+                                                            <input type="date" name="tanggal"
+                                                                class="form-control form-control-solid"
+                                                                placeholder="" />
+                                                        </div>
+                                                        <div class="mb-10">
+                                                            <label class="form-label fs-5 fw-bold mb-3">Tanggal
+                                                                Penanganan:</label>
+                                                            <input type="date" name="tanggal_penanganan"
+                                                                class="form-control form-control-solid"
+                                                                placeholder="" />
+                                                        </div>
+                                                        <div class="d-flex justify-content-end">
+                                                            <button type="reset"
+                                                                class="btn btn-light btn-active-light-primary me-2"
+                                                                data-kt-menu-dismiss="true"
+                                                                data-kt-customer-table-filter="reset">Reset</button>
+                                                            <button type="submit" class="btn btn-primary"
+                                                                data-kt-menu-dismiss="true"
+                                                                data-kt-customer-table-filter="filter">Apply</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-0">
+                                    <table class="table align-middle table-row-dashed fs-6 gy-5"
+                                        id="kt_customers_table">
+                                        <thead>
+                                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                <th class="min-w-75px">Kanal Pengaduan</th>
+                                                <th class="min-w-100px">Tanggal Aduan Masuk</th>
+                                                <th class="min-w-100px">Tanggal Penanganan</th>
+                                                <th class="min-w-75px">No Tiket</th>
+                                                <th class="min-w-125px">Nama Nasabah</th>
+                                                <th class="min-w-125px">Kategori Pengaduan</th>
+                                                <th class="min-w-50px">SLA</th>
+                                                <!-- <th class="min-w-50px">Order</th> -->
+                                                <th class="text-center">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="fw-bold text-gray-600">
+                                            {% set jenis_map = {
+                                            '1': 'Informasi Pengajuan',
+                                            '2': 'Permintaan Kode OTP',
+                                            '3': 'Informasi Tenor',
+                                            '4': 'Informasi Tagihan',
+                                            '5': 'Informasi Denda',
+                                            '6': 'Pembatalan Pinjaman',
+                                            '7': 'Informasi Pencairan Dana',
+                                            '8': 'Perilaku Petugas Penagihan',
+                                            '9': 'Informasi Pembayaran',
+                                            '10': 'Discount / Pemutihan'
+                                            } %}
+                                            {% set status_map = {
+                                            '1': 'Open',
+                                            '2': 'In-Progress',
+                                            '3': 'Pending',
+                                            '4': 'Closed',
+                                            '5': 'Resolved'
+                                            } %}
+                                            {% set kategori_map = {
+                                            '1': 'Rendah',
+                                            '2': 'Sedang',
+                                            '3': 'Tinggi'
+                                            } %}
+                                            {% for ticket in tickets.items %}
+                                            <tr>
+                                                <td>
+                                                    {% if ticket.kanal_pengaduan %}
+                                                    {% if ticket.kanal_pengaduan|lower == 'whatsapp' %}
+                                                    WhatsApp
+                                                    {% elif ticket.kanal_pengaduan|lower == 'email' %}
+                                                    Email
+                                                    {% else %}
+                                                    {{ ticket.kanal_pengaduan }}
+                                                    {% endif %}
+                                                    {% else %}
+                                                    -
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ ticket.tanggal.strftime('%d %b %Y') if ticket.tanggal else '' }}
+                                                </td>
+                                                <td>{{ ticket.nomor_ticket.created_at.strftime('%d %b %Y') if
+                                                    ticket.nomor_ticket.created_at else '-' }}</td>
+                                                <td>
+                                                    {% if ticket.nomor_ticket %}
+                                                    <a href="{{ url_for('list_data_info', nomor_ticket_id=ticket.nomor_ticket.id) }}"
+                                                        class="text-primary text-hover-underline">
+                                                        {{ ticket.nomor_ticket.nomor_ticket }}
+                                                    </a>
+                                                    {% else %}
+                                                    -
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ ticket.nama_nasabah or '-' }}
+                                                <td>{{ jenis_map[ticket.jenis_pengaduan] if ticket.jenis_pengaduan in
+                                                    jenis_map else '-' }}</td>
+                                                <td>{{ ticket.sla or '-' }}</td>
+                                                <!-- <td>
+                                                    {{ count_by_nomor_ticket[ticket.nomor_ticket.id] if
+                                                    ticket.nomor_ticket and ticket.nomor_ticket.id in
+                                                    count_by_nomor_ticket else '1' }}
+                                                </td> -->
+                                                <!-- <td>{{ status_map[ticket.status_ticket] if ticket.status_ticket in status_map else '-' }}</td> -->
+                                                <td class="text-center">
+                                                    <span class="badge d-inline-block px-3 py-2 
+                                                    {% if ticket.status_ticket == '1' %} badge-success
+                                                    {% elif ticket.status_ticket == '3' %} badge-warning
+                                                    {% elif ticket.status_ticket == '2' %} badge-primary
+                                                    {% elif ticket.status_ticket == '4' %} badge-danger
+                                                    {% elif ticket.status_ticket == '5' %} badge-info
+                                                    {% else %} badge-light {% endif %}" style="width: 100px;">
+                                                        {{ status_map[ticket.status_ticket|string] if
+                                                        ticket.status_ticket|string in status_map else '-' }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {% set args = request.args.to_dict() if request.args else {} %}
+                                    <div class="d-flex justify-content-center mt-4">
+                                        <nav>
+                                            <ul class="pagination">
+
+                                                {% set prev_args = args.copy() %}
+                                                {% set _ = prev_args.update({'page': tickets.prev_num}) %}
+                                                {% set next_args = args.copy() %}
+                                                {% set _ = next_args.update({'page': tickets.next_num}) %}
+
+                                                {% if tickets.has_prev %}
+                                                <li class="page-item">
+                                                    <a class="page-link"
+                                                        href="{{ url_for('list_data') }}?{{ prev_args | urlencode }}">Previous</a>
+                                                </li>
+                                                {% else %}
+                                                <li class="page-item disabled"><span class="page-link">Previous</span>
+                                                </li>
+                                                {% endif %}
+
+                                                {% for page_num in range(1, tickets.pages + 1) %}
+                                                {% set page_args = args.copy() %}
+                                                {% set _ = page_args.update({'page': page_num}) %}
+                                                <li
+                                                    class="page-item {% if tickets.page == page_num %}active{% endif %}">
+                                                    <a class="page-link"
+                                                        href="{{ url_for('list_data') }}?{{ page_args | urlencode }}">{{
+                                                        page_num }}</a>
+                                                </li>
+                                                {% endfor %}
+
+                                                {% if tickets.has_next %}
+                                                <li class="page-item">
+                                                    <a class="page-link"
+                                                        href="{{ url_for('list_data') }}?{{ next_args | urlencode }}">Next</a>
+                                                </li>
+                                                {% else %}
+                                                <li class="page-item disabled"><span class="page-link">Next</span></li>
+                                                {% endif %}
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal input ticket -->
+                            <div class="modal fade" id="kt_modal_add_customer" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered mw-650px">
+                                    <div class="modal-content">
+                                        <form class="form" action="{{ url_for('submit_ticket') }}" method="POST">
+                                            <div class="modal-header" id="kt_modal_add_customer_header">
+                                                <h2 class="fw-bolder">Add Ticket</h2>
+                                                <div id="kt_modal_add_customer_close"
+                                                    class="btn btn-icon btn-sm btn-active-icon-primary">
+                                                    <span class="svg-icon svg-icon-1">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none">
+                                                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
+                                                                rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                                            <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                                                transform="rotate(45 7.41422 6)" fill="black" />
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="modal-body py-10 px-lg-17">
+                                                <div class="scroll-y me-n7 pe-7" data-kt-scroll-offset="300px">
+                                                    <div class="row g-9 mb-7">
+                                                        <div class="col-md-6 fv-row">
+                                                            <label class="required fs-6 fw-bold mb-2">Kanal
+                                                                Pengaduan</label>
+                                                            <select name="country" aria-label="Select an Option"
+                                                                data-control="select2"
+                                                                data-placeholder="Select an Option..."
+                                                                class="form-select form-select-solid fw-bolder">
+                                                                <option value="">Select an Option...</option>
+                                                                <option value="Whatsapp">Whatsapp</option>
+                                                                <option value="Email">Email</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6 fv-row">
+                                                            <label class="fs-6 fw-bold mb-2">Kategori
+                                                                Pengaduan</label>
+                                                            <select name="kategori" aria-label="Select an Option"
+                                                                data-control="select2"
+                                                                data-placeholder="Select an Option..."
+                                                                class="form-select form-select-solid fw-bolder">
+                                                                <option value="">Select an Option...</option>
+                                                                <option value="1">Rendah</option>
+                                                                <option value="2">Sedang</option>
+                                                                <option value="3">Tinggi</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex flex-column mb-7 fv-row">
+                                                        <label class="fs-6 fw-bold mb-2">
+                                                            <span class="">Jenis Pengaduan</span>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7"
+                                                                data-bs-toggle="tooltip" title="Jenis Pengaduan"></i>
+                                                        </label>
+                                                        <select name="jenis" id="jenis_pengaduan"
+                                                            class="form-select form-select-solid fw-bolder">
+                                                            <option value="">Select an Option...</option>
+                                                            <option value="1">Informasi Pengajuan</option>
+                                                            <option value="2">Permintaan Kode OTP</option>
+                                                            <option value="3">Informasi Tenor</option>
+                                                            <option value="4">Informasi Tagihan</option>
+                                                            <option value="5">Informasi Denda</option>
+                                                            <option value="6">Pembatalan Pinjaman</option>
+                                                            <option value="7">Informasi Pencairan Dana</option>
+                                                            <option value="8">Perilaku Petugas Penagihan</option>
+                                                            <option value="9">Informasi Pembayaran</option>
+                                                            <option value="10">Discount / Pemutihan</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="d-flex flex-column mb-7 fv-row">
+                                                        <label class="fs-6 fw-bold mb-2">
+                                                            <span class="">Detail Pengaduan</span>
+                                                            <i class="fas fa-exclamation-circle ms-1 fs-7"
+                                                                data-bs-toggle="tooltip" title="Detail Pengaduan"></i>
+                                                        </label>
+                                                        <select name="detail_pengaduan" id="detail_pengaduan"
+                                                            class="form-select form-select-solid fw-bolder">
+                                                            <option value="">Pilih jenis pengaduan terlebih dahulu...
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="row g-9 mb-7">
+                                                        <div class="col-md-6 fv-row">
+                                                            <label class="required fs-6 fw-bold mb-2">Tanggal</label>
+                                                            <input type="date" name="tanggal"
+                                                                class="form-control form-control-solid"
+                                                                placeholder="" />
+                                                        </div>
+                                                        <div class="col-md-6 fv-row">
+                                                            <label class="fs-6 fw-bold mb-2">Email</label>
+                                                            <input type="email" class="form-control form-control-solid"
+                                                                placeholder="Input email" name="email" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row g-9 mb-7">
+                                                        <div class="col-md-12 fv-row">
+                                                            <label class="required fs-6 fw-bold mb-2">Nama
+                                                                Nasabah</label>
+                                                            <input type="text" name="nama_nasabah"
+                                                                class="form-control form-control-solid"
+                                                                placeholder="Input username" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row g-9 mb-7">
+                                                        <div class="col-md-6 fv-row">
+                                                            <label class="fs-6 fw-bold mb-2">Nomor
+                                                                Utama</label>
+                                                            <input type="number" name="nomor_utama"
+                                                                class="form-control form-control-solid"
+                                                                placeholder="Input phone number" />
+                                                        </div>
+                                                        <div class="col-md-6 fv-row">
+                                                            <label class="fs-6 fw-bold mb-2">Nomor Kontak</label>
+                                                            <input type="number" name="nomor_kontak"
+                                                                class="form-control form-control-solid"
+                                                                placeholder="Input phone number" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row g-9 mb-7">
+                                                        <div class="col-md-6 fv-row">
+                                                            <label class="fs-6 fw-bold mb-2">NIK</label>
+                                                            <input type="number" name="nik"
+                                                                class="form-control form-control-solid"
+                                                                placeholder="Input NIK" />
+                                                        </div>
+                                                        <div class="col-md-6 fv-row">
+                                                            <label class="fs-6 fw-bold mb-2">Order
+                                                                Number</label>
+                                                            <input type="number" name="order_no"
+                                                                class="form-control form-control-solid"
+                                                                placeholder="Input order number" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row g-9 mb-7">
+                                                        <!-- <div class="col-md-4 fv-row">
+                                                            <label class="fs-6 fw-bold mb-2">Nama OS</label>
+                                                            <input type="text" name="nama_os"
+                                                                class="form-control form-control-solid"
+                                                                placeholder="Input OS" />
+                                                        </div> -->
+                                                        <div class="col-md-4 fv-row">
+                                                            <label class="fs-6 fw-bold mb-2">Nama OS</label>
+                                                            <select name="nama_os" aria-label="Select OS"
+                                                                data-control="select2" data-placeholder="Select OS"
+                                                                class="form-select form-select-solid fw-bolder">
+                                                                <option value="">Select OS</option>
+                                                                <option value="MKM">MKM</option>
+                                                                <option value="LBT">LBT</option>
+                                                                <option value="VJR">VJR</option>
+                                                                <option value="Xinghao">Xinghao</option>
+                                                                <option value="EDN">EDN</option>
+                                                                <option value="Telmark">Telmark</option>
+                                                                <option value="Colmitra">Colmitra</option>
+                                                                <option value="Debito">Debito</option>
+                                                                <option value="TIN">TIN</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4 fv-row">
+                                                            <label class="fs-6 fw-bold mb-2">Nama DC</label>
+                                                            <input type="text" name="nama_dc"
+                                                                class="form-control form-control-solid"
+                                                                placeholder="Input DC" />
+                                                        </div>
+                                                        <!-- <div class="col-md-4 fv-row">
+                                                            <label class="fs-6 fw-bold mb-2">Bucket</label>
+                                                            <input type="text" name="nama_bucket"
+                                                                class="form-control form-control-solid"
+                                                                placeholder="Input Bucket" />
+                                                        </div> -->
+                                                        <div class="col-md-4 fv-row">
+                                                            <label class="fs-6 fw-bold mb-2">Bucket</label>
+                                                            <select name="nama_bucket" aria-label="Select Bucket"
+                                                                data-control="select2" data-placeholder="Select Bucket"
+                                                                class="form-select form-select-solid fw-bolder">
+                                                                <option value="">Select Bucket</option>
+                                                                <option value="H-1">H1</option>
+                                                                <option value="H0">H0</option>
+                                                                <option value="S1">S1</option>
+                                                                <option value="S2">S2</option>
+                                                                <option value="S3">S3</option>
+                                                                <option value="S4">S4</option>
+                                                                <option value="S5">S5</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex flex-column mb-7 fv-row">
+                                                        <label class="fs-6 fw-bold mb-2">Deskripsi Pengaduan</label>
+                                                        <textarea class="form-control form-control-solid"
+                                                            name="deskripsi_pengaduan" rows="3"
+                                                            placeholder="Type Details"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer flex-center">
+                                                <button type="reset" id="kt_modal_add_customer_cancel"
+                                                    class="btn btn-light me-3">Discard</button>
+                                                <button type="submit" id="kt_modal_add_customer_submit"
+                                                    class="btn btn-primary">
+                                                    <span class="indicator-label">Submit</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="kt_customers_export_modal" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered mw-650px">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h2 class="fw-bolder">Export Ticket</h2>
+                                        </div>
+                                        <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                                            <form id="kt_customers_export_form" class="form" method="GET"
+                                                action="{{ url_for('export_ticket_excel') }}">
+                                                <div class="fv-row mb-10">
+                                                    <label class="fs-5 fw-bold form-label mb-5">Select Date
+                                                        Range:</label>
+                                                    <input class="form-control form-control-solid"
+                                                        placeholder="Pick a date" name="date" id="date_range_input" />
+                                                </div>
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <span>Export</span>
+                                                    </button>
+                                                </div>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal Import Ticket -->
+                            <div class="modal fade" id="kt_modal_import_ticket" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered mw-750px">
+                                    <div class="modal-content rounded">
+                                        <div class="modal-header pb-0 border-0 justify-content-end">
+                                            <div class="btn btn-sm btn-icon btn-active-color-primary"
+                                                data-bs-dismiss="modal">
+                                                <span class="svg-icon svg-icon-1">
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <form method="POST" action="{{ url_for('upload_excel') }}"
+                                            enctype="multipart/form-data">
+                                            <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
+                                                <div class="mb-13 text-center">
+                                                    <h1 class="mb-3">Import Ticket</h1>
+                                                    <div class="text-gray-400 fw-bold fs-5">
+                                                        Pastikan sesuai dengan format Excelnya, download disini
+                                                        <a href="{{ url_for('download_template') }}"
+                                                            class="fw-bolder link-primary">Template Import Ticket</a>.
+                                                    </div>
+                                                </div>
+
+                                                <div class="fv-row mb-8">
+                                                    <label class="fs-6 fw-bold mb-2">Upload File Excel</label>
+                                                    <input type="file" id="avatar" name="avatar" accept=".xlsx"
+                                                        class="form-control" required />
+                                                </div>
+
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                    <button type="button" class="btn btn-light"
+                                                        data-bs-dismiss="modal">Tutup</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
+                    <div
+                        class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
+                        <div class="text-dark order-2 order-md-1">
+                            <span class="text-muted fw-bold me-1">2025©</span>
+                            <a href="https://ksparthaniaga.com/" target="_blank"
+                                class="text-gray-800 text-hover-primary">KSP Artha Niaga</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+        <span class="svg-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)"
+                    fill="black" />
+                <path
+                    d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
+                    fill="black" />
+            </svg>
+        </span>
+    </div>
+    <script>var hostUrl = "../static/assets/";</script>
+    <script src="../static/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="../static/assets/js/scripts.bundle.js"></script>
+    <script src="../static/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="../static/assets/js/custom/apps/customers/list/export.js"></script>
+    <script src="../static/assets/js/custom/apps/customers/list/list.js"></script>
+    <script src="../static/assets/js/custom/apps/customers/add.js"></script>
+    <script src="../static/assets/js/custom/widgets.js"></script>
+    <script src="../static/assets/js/custom/apps/chat/chat.js"></script>
+    <script src="../static/assets/js/custom/modals/create-app.js"></script>
+    <script src="../static/assets/js/custom/modals/upgrade-plan.js"></script>
+    <script src="../static/assets/plugins/custom/leaflet/leaflet.bundle.js"></script>
+    <script src="../static/assets/js/custom/apps/support-center/tickets/create.js"></script>
+    <script src="../static/assets/js/custom/pages/company/contact.js"></script>
+    <script src="../static/assets/js/custom/widgets.js"></script>
+    <script>
+        const detailOptions = {
+            1: [
+                "Pengajuan Ditolak",
+                "Status Pengajuan sedang ditransfer",
+                "Tidak bisa pengajuan ulang karena keterlambatan",
+                "Verifikasi Bank gagal",
+                "Verifikasi KTP gagal",
+                "Cara pengajuan",
+                "Perubahan Nomor Handphone",
+                "Perubahan Nomor Rekening"
+            ],
+            2: [
+                "OTP Limit",
+                "Tidak terima SMS OTP"
+            ],
+            3: [
+                "Informasi Pinjaman"
+            ],
+            4: [
+                "Konsultasi detail pinjaman saat ini",
+                "Konsultasi Perpanjangan",
+                "Bukti Transfer"
+            ],
+            5: [
+                "Denda Keterlambatan"
+            ],
+            6: [
+                "Hapus Data (Penutupan Akun)",
+                "Pembatalan Pinjaman"
+            ],
+            7: [
+                "Pencairan dana berhasil",
+                "Status pencairan dana gagal",
+                "Status pengajuan pencairan dana ulang",
+                "Tidak terima dana",
+                "Operasi Gagal (tidak bisa verifikasi wajah dan KTP)"
+            ],
+            8: [
+                "Keluhan Penagihan",
+                "Keluhan Reminder",
+                "Penipuan"
+            ],
+            9: [
+                "Konfirmasi Pembayaran",
+                "Pembayaran belum masuk",
+                "Pembayaran bukan ke VA UATAS",
+                "Refund (pembayaran double)",
+                "Meminta VA (cicilan)",
+                "Meminta VA (pelunasan)",
+                "Meminta VA (perpanjangan)",
+                "Tidak bisa ambil VA"
+            ],
+            10: [
+                "Meminta keringanan pembayaran (cicilan)",
+                "Meminta keringanan pembayaran (potongan denda)",
+                "Tidak ada dana"
+            ]
+        };
+
+        const jenisDropdown = document.getElementById('jenis_pengaduan');
+        const detailDropdown = document.getElementById('detail_pengaduan');
+
+        jenisDropdown.addEventListener('change', function () {
+            const selected = this.value;
+            detailDropdown.innerHTML = '';
+
+            if (detailOptions[selected]) {
+                detailDropdown.innerHTML = '<option value="">Pilih Detail Pengaduan...</option>';
+                detailOptions[selected].forEach(function (item) {
+                    const option = document.createElement('option');
+                    option.value = item;
+                    option.textContent = item;
+                    detailDropdown.appendChild(option);
+                });
+            } else {
+                detailDropdown.innerHTML = '<option value="">Pilih jenis pengaduan terlebih dahulu...</option>';
+            }
+        });
+    </script>
+    <script>
+        setTimeout(function () {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function (alert) {
+                alert.classList.remove('show');
+                alert.classList.add('fade');
+                setTimeout(() => alert.remove(), 500);
+            });
+        }, 2000);
+    </script>
+    <script>
+        $(function () {
+            $('input[name="date"]').daterangepicker({
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: 'Clear',
+                    format: 'YYYY-MM-DD'
+                }
+            });
+
+            $('input[name="date"]').on('apply.daterangepicker', function (ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+            });
+
+            $('input[name="date"]').on('cancel.daterangepicker', function (ev, picker) {
+                $(this).val('');
+            });
+        });
+    </script>
+    <script>
+        Dropzone.autoDiscover = false;
+
+        let myDropzone = new Dropzone("#kt_modal_create_ticket_attachments", {
+            url: "/upload",
+            autoProcessQueue: false,
+            paramName: "file",
+            maxFiles: 1,
+            maxFilesize: 100,
+            acceptedFiles: ".xlsx",
+            addRemoveLinks: true,
+            dictDefaultMessage: "Drop file di sini atau klik untuk upload",
+            clickable: true,
+        });
+
+        document.getElementById("submitImportBtn").addEventListener("click", function () {
+            if (myDropzone.getAcceptedFiles().length === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Pilih file terlebih dahulu!',
+                });
+                return;
+            }
+            myDropzone.processQueue();
+        });
+
+        myDropzone.on("success", function (file, response) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'File berhasil diimport.',
+                timer: 2000,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.reload();
+            });
+        });
+
+        myDropzone.on("error", function (file, response) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: typeof response === 'string' ? response : 'Gagal mengupload file',
+            });
+        });
+    </script>
+
+</body>
+
+</html>

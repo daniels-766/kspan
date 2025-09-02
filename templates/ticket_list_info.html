@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="../">
+    <title>Ticket {{ nomor_ticket.nomor_ticket }}</title>
+    <meta name="description" content="Dashboard CS Uatas" />
+    <meta name="keywords" content="Dashboard CS Uatas" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title"
+        content="Metronic - Bootstrap 5 HTML, VueJS, React, Angular &amp; Laravel Admin Dashboard Theme" />
+    <meta property="og:url" content="https://keenthemes.com/metronic" />
+    <meta property="og:site_name" content="Keenthemes | Metronic" />
+    <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+    <link rel="shortcut icon" href="../static/assets/logo/ksp.png" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <link href="../static/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="../static/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="../static/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body id="kt_body"
+    class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed"
+    style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="alert-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+        {% for category, message in messages %}
+        <div class="alert 
+                {% if category == 'error' %}alert-danger
+                {% elif category == 'success' %}alert-success
+                {% else %}alert-info
+                {% endif %}
+                alert-dismissible fade show shadow-sm" role="alert" id="flash-alert-{{ loop.index }}">
+            <strong>
+                {% if category == 'success' %}Success!{% elif category == 'error' %}Error!{% else %}Notice!{% endif %}
+            </strong> {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+    <div class="d-flex flex-column flex-root">
+        <div class="page d-flex flex-row flex-column-fluid">
+            <div id="kt_aside" class="aside aside-dark aside-hoverable" data-kt-drawer="true"
+				data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}"
+				data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}"
+				data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle">
+				<div class="aside-logo flex-column-auto" id="kt_aside_logo">
+					<span href="">
+						<img alt="Logo" src="../static/assets/logo/logos2.png" class="h-40px logo" />
+					</span>
+					<div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle"
+						data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body"
+						data-kt-toggle-name="aside-minimize">
+						<span class="svg-icon svg-icon-1 rotate-180">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+								fill="none">
+								<path opacity="0.5"
+									d="M14.2657 11.4343L18.45 7.25C18.8642 6.83579 18.8642 6.16421 18.45 5.75C18.0358 5.33579 17.3642 5.33579 16.95 5.75L11.4071 11.2929C11.0166 11.6834 11.0166 12.3166 11.4071 12.7071L16.95 18.25C17.3642 18.6642 18.0358 18.6642 18.45 18.25C18.8642 17.8358 18.8642 17.1642 18.45 16.75L14.2657 12.5657C13.9533 12.2533 13.9533 11.7467 14.2657 11.4343Z"
+									fill="black" />
+								<path
+									d="M8.2657 11.4343L12.45 7.25C12.8642 6.83579 12.8642 6.16421 12.45 5.75C12.0358 5.33579 11.3642 5.33579 10.95 5.75L5.40712 11.2929C5.01659 11.6834 5.01659 12.3166 5.40712 12.7071L10.95 18.25C11.3642 18.6642 12.0358 18.6642 12.45 18.25C12.8642 17.8358 12.8642 17.1642 12.45 16.75L8.2657 12.5657C7.95328 12.2533 7.95328 11.7467 8.2657 11.4343Z"
+									fill="black" />
+							</svg>
+						</span>
+					</div>
+				</div>
+				<div class="aside-menu flex-column-fluid">
+					<div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true"
+						data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto"
+						data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer"
+						data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="0">
+						<div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
+								<div class="menu-item">
+									<div class="menu-content pb-2">
+										<span class="menu-section text-muted text-uppercase fs-8 ls-1">Dashboard</span>
+									</div>
+								</div>
+								<div class="menu-item">
+									<a class="menu-link" href="{{ url_for('admin_dashboard') }}">
+										<span class="menu-icon">
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
+													<rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
+													<rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
+													<rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
+												</svg>
+											</span>
+										</span>
+										<span class="menu-title">Dashboard</span>
+									</a>
+								</div>
+                                <div class="menu-item">
+									<a class="menu-link" href="{{ url_for('admin_statistik') }}">
+										<span class="menu-icon">
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M13.0021 10.9128V3.01281C13.0021 2.41281 13.5021 1.91281 14.1021 2.01281C16.1021 2.21281 17.9021 3.11284 19.3021 4.61284C20.7021 6.01284 21.6021 7.91285 21.9021 9.81285C22.0021 10.4129 21.5021 10.9128 20.9021 10.9128H13.0021Z" fill="currentColor"/>
+                                                    <path opacity="0.3" d="M11.0021 13.7128V4.91283C11.0021 4.31283 10.5021 3.81283 9.90208 3.91283C5.40208 4.51283 1.90209 8.41284 2.00209 13.1128C2.10209 18.0128 6.40208 22.0128 11.3021 21.9128C13.1021 21.8128 14.7021 21.3128 16.0021 20.4128C16.5021 20.1128 16.6021 19.3128 16.1021 18.9128L11.0021 13.7128Z" fill="currentColor"/>
+                                                    <path opacity="0.3" d="M21.9021 14.0128C21.7021 15.6128 21.1021 17.1128 20.1021 18.4128C19.7021 18.9128 19.0021 18.9128 18.6021 18.5128L13.0021 12.9128H20.9021C21.5021 12.9128 22.0021 13.4128 21.9021 14.0128Z" fill="currentColor"/>
+                                                </svg>
+											</span>
+										</span>
+										<span class="menu-title">Statistik</span>
+									</a>
+								</div>
+                                <div class="menu-item">
+									<a class="menu-link" href="{{ url_for('filtering') }}">
+										<span class="menu-icon">
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path opacity="0.3" d="M14 3V21H10V3C10 2.4 10.4 2 11 2H13C13.6 2 14 2.4 14 3ZM7 14H5C4.4 14 4 14.4 4 15V21H8V15C8 14.4 7.6 14 7 14Z" fill="currentColor"/>
+                                                    <path d="M21 20H20V8C20 7.4 19.6 7 19 7H17C16.4 7 16 7.4 16 8V20H3C2.4 20 2 20.4 2 21C2 21.6 2.4 22 3 22H21C21.6 22 22 21.6 22 21C22 20.4 21.6 20 21 20Z" fill="currentColor"/>
+                                                </svg>
+											</span>
+										</span>
+										<span class="menu-title">Filtering</span>
+									</a>
+								</div>
+                                <div class="menu-item">
+									<a class="menu-link" href="{{ url_for('filtering_kanal') }}">
+										<span class="menu-icon">
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M13 5.91517C15.8 6.41517 18 8.81519 18 11.8152C18 12.5152 17.9 13.2152 17.6 13.9152L20.1 15.3152C20.6 15.6152 21.4 15.4152 21.6 14.8152C21.9 13.9152 22.1 12.9152 22.1 11.8152C22.1 7.01519 18.8 3.11521 14.3 2.01521C13.7 1.91521 13.1 2.31521 13.1 3.01521V5.91517H13Z" fill="currentColor"/>
+                                                    <path opacity="0.3" d="M19.1 17.0152C19.7 17.3152 19.8 18.1152 19.3 18.5152C17.5 20.5152 14.9 21.7152 12 21.7152C9.1 21.7152 6.50001 20.5152 4.70001 18.5152C4.30001 18.0152 4.39999 17.3152 4.89999 17.0152L7.39999 15.6152C8.49999 16.9152 10.2 17.8152 12 17.8152C13.8 17.8152 15.5 17.0152 16.6 15.6152L19.1 17.0152ZM6.39999 13.9151C6.19999 13.2151 6 12.5152 6 11.8152C6 8.81517 8.2 6.41515 11 5.91515V3.01519C11 2.41519 10.4 1.91519 9.79999 2.01519C5.29999 3.01519 2 7.01517 2 11.8152C2 12.8152 2.2 13.8152 2.5 14.8152C2.7 15.4152 3.4 15.7152 4 15.3152L6.39999 13.9151Z" fill="currentColor"/>
+                                                </svg>
+											</span>
+										</span>
+										<span class="menu-title">Filtering Kanal</span>
+									</a>
+								</div>
+                                <div class="menu-item">
+									<a class="menu-link active" href="{{ url_for('list_data') }}">
+										<span class="menu-icon">
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path opacity="0.3" d="M10 4H21C21.6 4 22 4.4 22 5V7H10V4Z" fill="currentColor"/>
+                                                    <path d="M9.2 3H3C2.4 3 2 3.4 2 4V19C2 19.6 2.4 20 3 20H21C21.6 20 22 19.6 22 19V7C22 6.4 21.6 6 21 6H12L10.4 3.60001C10.2 3.20001 9.7 3 9.2 3Z" fill="currentColor"/>
+                                                </svg>
+											</span>
+										</span>
+										<span class="menu-title">List Ticket</span>
+									</a>
+								</div>
+							</div>
+					</div>
+				</div>
+			</div>
+            <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+                <div id="kt_header" class="header align-items-stretch">
+                    <div class="container-fluid d-flex align-items-stretch justify-content-between">
+                        <div class="d-flex align-items-center d-lg-none ms-n3 me-1" title="Show aside menu">
+                            <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
+                                id="kt_aside_mobile_toggle">
+                                <span class="svg-icon svg-icon-2x mt-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none">
+                                        <path
+                                            d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z"
+                                            fill="black" />
+                                        <path opacity="0.3"
+                                            d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z"
+                                            fill="black" />
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
+                            <a href="../../demo1/dist/index.html" class="d-lg-none">
+                                <img alt="Logo" src="../static/assets/media/logos/logo-2.svg" class="h-30px" />
+                            </a>
+                        </div>
+                        <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
+                            <div class="d-flex align-items-stretch" id="kt_header_nav">
+                                <div class="header-menu align-items-stretch" data-kt-drawer="true"
+                                    data-kt-drawer-name="header-menu"
+                                    data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true"
+                                    data-kt-drawer-width="{default:'200px', '300px': '250px'}"
+                                    data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_header_menu_mobile_toggle"
+                                    data-kt-swapper="true" data-kt-swapper-mode="prepend"
+                                    data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav'}">
+                                    <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch" id="#kt_header_menu" data-kt-menu="true">
+											<div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('admin_dashboard') }}">
+													<span class="menu-title">Dashboard</span>
+												</a>
+											</div>
+                                            <div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('admin_statistik') }}">
+													<span class="menu-title">Statistik</span>
+												</a>
+											</div>
+                                            <div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('filtering') }}">
+													<span class="menu-title">Filtering</span>
+												</a>
+											</div>
+                                            <div class="menu-item me-lg-1">
+												<a class="menu-link py-3" href="{{ url_for('filtering_kanal') }}">
+													<span class="menu-title">Filtering Kanal</span>
+												</a>
+											</div>
+                                            <div class="menu-item me-lg-1">
+												<a class="menu-link active py-3" href="{{ url_for('list_data') }}">
+													<span class="menu-title">List Ticket</span>
+												</a>
+											</div>
+										</div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-stretch flex-shrink-0">
+                                <div class="d-flex align-items-stretch flex-shrink-0">
+                                    <div class="d-flex align-items-center ms-1 ms-lg-3">
+											<div class="btn btn-icon btn-active-light-primary position-relative w-30px h-30px w-md-40px h-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+												<span class="svg-icon svg-icon-1">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<path opacity="0.3" d="M20 3H4C2.89543 3 2 3.89543 2 5V16C2 17.1046 2.89543 18 4 18H4.5C5.05228 18 5.5 18.4477 5.5 19V21.5052C5.5 22.1441 6.21212 22.5253 6.74376 22.1708L11.4885 19.0077C12.4741 18.3506 13.6321 18 14.8167 18H20C21.1046 18 22 17.1046 22 16V5C22 3.89543 21.1046 3 20 3Z" fill="black" />
+														<rect x="6" y="12" width="7" height="2" rx="1" fill="black" />
+														<rect x="6" y="7" width="12" height="2" rx="1" fill="black" />
+													</svg>
+												</span>
+												<span class="bullet bullet-dot bg-danger h-8px w-8px position-absolute translate-middle top-0 start-50 animation-blink"></span>
+											</div>
+											<div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px" data-kt-menu="true">
+												<div class="d-flex flex-column bgi-no-repeat rounded-top" style="background-image:url('../static/assets/media/misc/pattern-1.jpg')">
+													<h3 class="text-white fw-bold px-9 mt-10 mb-6">SLA
+													<span class="fs-8 opacity-75 ps-3">{{ sla_warning_tickets|length }} reports</span></h3>
+													<ul class="nav nav-line-tabs nav-line-tabs-2x nav-stretch fw-bold px-9">
+														<li class="nav-item">
+															<a class="nav-link text-white opacity-75 opacity-state-100 pb-4 active" data-bs-toggle="tab" href="#kt_topbar_notifications_3">SLA Information</a>
+														</li>
+													</ul>
+												</div>
+												<div class="tab-content">
+													<div class="tab-pane fade show active" id="kt_topbar_notifications_3" role="tabpanel">
+														<div class="scroll-y mh-325px my-5 px-8">
+															{% for ticket in sla_warning_tickets %}
+															<div class="d-flex flex-stack py-4">
+																<div class="d-flex align-items-center me-2">
+																	<span class="w-70px badge 
+																		{% if ticket.sla == 3 %} badge-light-success
+																		{% elif ticket.sla == 2 %} badge-light-danger
+																		{% elif ticket.sla == 1 %} badge-light-warning
+																		{% endif %}
+																		me-4">sisa sla {{ ticket.sla }}</span>
+																	<span class="text-gray-800 text-hover-primary fw-bold">
+																		{{ ticket.nomor_ticket.nomor_ticket }}
+																	</span>
+																</div>
+																<span class="badge badge-light fs-8">sisa sla {{ ticket.sla }}</span>
+															</div>
+															{% endfor %}
+														</div>
+													</div>
+												</div>
+											</div>
+									</div>
+                                    <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
+                                        <div class="cursor-pointer symbol symbol-30px symbol-md-40px"
+                                            data-kt-menu-trigger="click" data-kt-menu-attach="parent"
+                                            data-kt-menu-placement="bottom-end">
+                                            <img src="../static/assets/logo/ksp.png"
+                                                alt="user" />
+                                        </div>
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
+                                            data-kt-menu="true">
+                                            <div class="menu-item px-3">
+                                                <div class="menu-content d-flex align-items-center px-3">
+                                                    <div class="symbol symbol-50px me-5">
+                                                        <img alt="Logo"
+                                                            src="../static/assets/logo/ksp.png" />
+                                                    </div>
+                                                    <div class="d-flex flex-column">
+                                                        <div class="fw-bolder d-flex align-items-center fs-5">{{
+                                                            user.username }}
+                                                            <span
+                                                                class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">{{
+                                                                user.role }}</span>
+                                                        </div>
+                                                        <span class="fw-bold text-muted text-hover-primary fs-7">{{
+                                                            user.email }}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="menu-item px-5">
+                                                <a href="{{ url_for('logout') }}" class="menu-link px-5">Sign Out</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center d-lg-none ms-2 me-n3"
+                                        title="Show header menu">
+                                        <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
+                                            id="kt_header_menu_mobile_toggle">
+                                            <span class="svg-icon svg-icon-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none">
+                                                    <path
+                                                        d="M13 11H3C2.4 11 2 10.6 2 10V9C2 8.4 2.4 8 3 8H13C13.6 8 14 8.4 14 9V10C14 10.6 13.6 11 13 11ZM22 5V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4V5C2 5.6 2.4 6 3 6H21C21.6 6 22 5.6 22 5Z"
+                                                        fill="black" />
+                                                    <path opacity="0.3"
+                                                        d="M21 16H3C2.4 16 2 15.6 2 15V14C2 13.4 2.4 13 3 13H21C21.6 13 22 13.4 22 14V15C22 15.6 21.6 16 21 16ZM14 20V19C14 18.4 13.6 18 13 18H3C2.4 18 2 18.4 2 19V20C2 20.6 2.4 21 3 21H13C13.6 21 14 20.6 14 20Z"
+                                                        fill="black" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                    <div class="toolbar" id="kt_toolbar">
+                        <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+                            <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
+                                data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
+                                class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Nomor Ticket : {{
+                                    nomor_ticket.nomor_ticket }}
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post d-flex flex-column-fluid" id="kt_post">
+                        <div id="kt_content_container" class="container-xxl">
+                            <div class="card mb-5 mb-xl-10">
+                                <div class="card-body pt-9 pb-0">
+                                    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+                                        <div class="d-flex overflow-auto h-55px">
+                                            <ul class="nav nav-tabs" id="ticketTabs" role="tablist">
+                                                {% for ticket in tickets %}
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link {% if loop.first %}active{% endif %}"
+                                                        id="ticket-tab-{{ loop.index }}" data-bs-toggle="tab"
+                                                        data-bs-target="#ticket-{{ loop.index }}" type="button"
+                                                        role="tab" aria-controls="ticket-{{ loop.index }}"
+                                                        aria-selected="{{ 'true' if loop.first else 'false' }}">
+                                                        Order #{{ loop.index }}
+                                                    </button>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <!-- <div class="d-flex gap-2 align-items-center">
+                                            <form id="closeTicketForm" method="POST" action="{{ url_for('close_nomor_ticket', nomor_ticket_id=nomor_ticket.id) }}">
+                                                <button type="button" class="btn btn-danger" id="closeTicketBtn">
+                                                    Close Ticket
+                                                </button>
+                                            </form>
+                                            <div class="dropdown">
+                                                <button class="btn btn-info" 
+                                                        type="button" id="statusMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="bi bi-three-dots-vertical me-1"></i> Status
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-3" aria-labelledby="statusMenu">
+                                                    <li><h6 class="dropdown-header text-muted text-uppercase">Ubah Status</h6></li>
+
+                                                    <li>
+                                                        <button type="button" class="dropdown-item change-status" data-status="2" data-label="In Progress">
+                                                            <i class="bi bi-hourglass-split text-warning me-2"></i> In Progress
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button type="button" class="dropdown-item change-status" data-status="3" data-label="Pending">
+                                                            <i class="bi bi-exclamation-triangle text-danger me-2"></i> Pending
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button type="button" class="dropdown-item change-status" data-status="5" data-label="Resolved">
+                                                            <i class="bi bi-check-circle text-success me-2"></i> Resolved
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <form id="statusForm" method="POST" style="display:none;">
+                                            </form>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+                                <div
+                                    class="card-header cursor-pointer d-flex justify-content-between align-items-center">
+                                    <div class="card-title m-0">
+                                        <h3 class="fw-bolder m-0">Informasi Kontak Konsumen</h3>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <a href="{{ url_for('list_data') }}" class="btn btn-primary">Kembali</a>
+                                        <!-- <a href="#" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#kt_modal_add_catatan_nomor_ticket">Add Catatan</a> -->
+                                        <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#kt_modal_view_catatan_nomor_ticket">View Catatan</a>
+                                        <!-- <a href="" class="btn btn-success" data-bs-toggle="modal"data-bs-target="#kt_modal_add_order">Add Order</a> -->
+                                    </div>
+                                </div>
+                                <div class="card-body p-9">
+                                    <div class="tab-content" id="ticketTabContent">
+                                        {% for ticket in tickets %}
+                                        {% set kontak = ticket.kontaks[0] if ticket.kontaks else None %}
+                                        <div class="tab-pane fade {% if loop.first %}show active{% endif %}"
+                                            id="ticket-{{ loop.index }}" role="tabpanel"
+                                            aria-labelledby="ticket-tab-{{ loop.index }}">
+                                            
+                                            <div class="modal fade" id="kt_modal_add_catatan_{{ loop.index }}" tabindex="-1" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered mw-650px">
+                                                    <div class="modal-content">
+                                                        <form method="POST" action="{{ url_for('update_catatan', ticket_id=ticket.id) }}">
+                                                            <div class="modal-header" id="kt_modal_add_catatab_header">
+                                                                <h2 class="fw-bolder">Detail Catatan Follow Up Pengaduan Nasabah</h2>
+                                                            </div>
+                                                            <div class="modal-body py-10 px-lg-17">
+                                                                <div class="scroll-y me-n7 pe-7" data-kt-scroll-offset="300px">
+                                                                    <div class="row g-9 mb-7">
+                                                                        <div class="col-md-12 fv-row">
+                                                                            <label class="fs-6 fw-bold mb-2">Catatan</label>
+                                                                            <textarea name="catatan" rows="5" class="form-control form-control-solid">{{ ticket.catatan or '' }}</textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row g-9 mb-7">
+                                                                        <div class="col-md-12 fv-row">
+                                                                            <label class="fs-6 fw-bold mb-2">Tanggal Catatan : </label>
+                                                                            <span class="fw-bold fs-6 text-gray-800 text-hover-primary bold"> {{ ticket.tanggal_catatan or '-' }} </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer flex-center">
+                                                                <button type="submit" id="kt_modal_add_catatan_submit"
+                                                                    class="btn btn-primary">
+                                                                    <span class="indicator-label">Submit</span>
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+                                                <div class="card-header cursor-pointer d-flex justify-content-between align-items-center">
+                                                    <div class="card-title m-0">
+                                                        {% set status_text = {
+                                                            "1": "Open",
+                                                            "2": "In Progress",
+                                                            "3": "Pending",
+                                                            "4": "Closed",
+                                                            "5": "Resolved"
+                                                        } %}
+
+                                                        {% set status_class = {
+                                                            "1": "badge-success",
+                                                            "2": "badge-primary",
+                                                            "3": "badge-warning",
+                                                            "4": "badge-danger",
+                                                            "5": "badge-info"
+                                                        } %}
+
+                                                        <h3 class="fw-bolder m-0">
+                                                            Status Case :
+                                                            <span class="badge {{ status_class.get(ticket.status_ticket|string, 'badge-light') }}">
+                                                                {{ status_text.get(ticket.status_ticket|string, 'Sedang dalam Proses') }}
+                                                            </span>
+                                                        </h3>
+                                                    </div>
+
+                                                    <div class="text-end">
+                                                        <span class="fw-bold text-muted">Sisa SLA: {{ ticket.sla or '0' }} hari</span>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body p-9">
+                                                    <form method="POST" action="{{ url_for('update_tahapan', nomor_ticket_id=nomor_ticket.id, ticket_id=ticket.id) }}"data-ticket-id="{{ ticket.id }}">
+                                                        <!-- <div class="row">
+                                                            <div class="col-md-6">
+                                                            </div>
+                                                            <div class="col-md-6 text-end">
+                                                                <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#kt_modal_add_catatan_{{ loop.index }}">Catatan</a>
+                                                            </div>
+                                                        </div> -->
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="row mb-7">
+                                                                    <label class="col-lg-5 fw-bold text-muted">Nama Lengkap</label>
+                                                                    <div class="col-lg-7">
+                                                                        <input type="text" name="nama_nasabah" class="form-control form-control-solid" value="{{ ticket.nama_nasabah or '-' }}" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-7">
+                                                                    <label class="col-lg-5 fw-bold text-muted">NIK</label>
+                                                                    <div class="col-lg-7">
+                                                                        <input type="text" name="nik" class="form-control form-control-solid" value="{{ ticket.nik or '-' }}" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-4">
+                                                                    <label class="col-lg-5 fw-bold text-muted">No HP <span class="badge badge-success">Utama</span></label>
+                                                                    <div class="col-lg-7">
+                                                                        <input type="number" name="nomor_utama" class="form-control form-control-solid" value="{{ ticket.nomor_utama or '-' }}" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-4">
+                                                                    <label class="col-lg-5 fw-bold text-muted">No HP Kontak <span class="badge badge-primary">Kontak</span></label>
+                                                                    <div class="col-lg-7">
+                                                                        <input type="number" name="nomor_kontak" class="form-control form-control-solid" value="{{ ticket.nomor_kontak or '-' }}" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-4">
+                                                                    <label class="col-lg-5 fw-bold text-muted">Email</label>
+                                                                    <div class="col-lg-7">
+                                                                        <input type="text" name="email" class="form-control form-control-solid" value="{{ ticket.email or '-' }}" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <div class="row mb-4">
+                                                                    <label class="col-lg-5 fw-bold text-muted">Nomor Order</label>
+                                                                    <div class="col-lg-7">
+                                                                        <input type="text" name="order_no" class="form-control form-control-solid" value="{{ ticket.order_no or '-' }}" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <div class="row mb-7">
+                                                                    <label class="col-lg-5 fw-bold text-muted">Sisa
+                                                                        SLA</label>
+                                                                    <div class="col-lg-7">
+                                                                        <span class="fw-bold text-gray-800 fs-6">
+                                                                            {{ ticket.sla or '0' }} Hari
+                                                                        </span>
+                                                                    </div>
+                                                                </div> -->
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="row mb-7">
+                                                                    <label class="col-lg-5 fw-bold text-muted">Kanal Pengaduan</label>
+                                                                    <div class="col-lg-7">
+                                                                        <span class="fw-bold fs-6 text-gray-800 text-hover-primary"> {{ ticket.kanal_pengaduan or '-' }}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-7">
+                                                                    <label class="col-lg-5 fw-bold text-muted">Tiket</label>
+                                                                    <div class="col-lg-7">
+                                                                        <span class="fw-bold fs-6 text-gray-800 text-hover-primary"> {{ ticket.nomor_ticket.nomor_ticket }}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-7">
+                                                                    <label class="col-lg-5 fw-bold text-muted">Jenis Pengaduan</label>
+                                                                    <div class="col-lg-7">
+                                                                        <span class="fw-bold text-gray-800 fs-6"> {{ jenis_pengaduan_map.get(ticket.jenis_pengaduan | int, 'Tidak Diketahui') }}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-4">
+                                                                    <label class="col-lg-5 fw-bold text-muted">Nama Dc</label>
+                                                                    <div class="col-lg-7">
+                                                                        <input type="text" name="nama_dc" class="form-control form-control-solid" value="{{ ticket.nama_dc or '-' }}" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-4">
+                                                                    <label class="col-lg-5 fw-bold text-muted">OS</label>
+                                                                    <div class="col-lg-7">
+                                                                        <input type="text" name="nama_os" class="form-control form-control-solid" value="{{ ticket.nama_os}}" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-4">
+                                                                    <label class="col-lg-5 fw-bold text-muted">Bucket</label>
+                                                                    <div class="col-lg-7">
+                                                                        <input type="text" name="nama_bucket" class="form-control form-control-solid" value="{{ ticket.nama_bucket}}" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <div class="row mb-7">
+                                                                    <label
+                                                                        class="col-lg-5 fw-bold text-muted">Status</label>
+                                                                    <div class="col-lg-5 fv-row">
+                                                                        <select name="status_ticket"
+                                                                            class="form-select form-select-solid form-select-lg status-select"
+                                                                            data-ticket-id="{{ ticket.id }}">
+                                                                            <option value="">Pilih Status</option>
+                                                                            <option value="2" {% if
+                                                                                ticket.status_ticket=='2' %}selected{%
+                                                                                endif %}>In-Progress</option>
+                                                                            <option value="3" {% if
+                                                                                ticket.status_ticket=='3' %}selected{%
+                                                                                endif %}>Pending</option>
+                                                                            <option value="5" {% if
+                                                                                ticket.status_ticket=='5' %}selected{%
+                                                                                endif %}>Resolved</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div> -->
+                                                                <div class="row mb-3">
+                                                                    <label
+                                                                        class="col-lg-5 fw-bold text-muted">Tahapan</label>
+                                                                    <div class="col-lg-7 fv-row">
+                                                                        <select name="tahapan"
+                                                                            class="form-select form-select-solid form-select-lg" disabled>
+                                                                            <option value="">Pilih tahapan</option>
+                                                                            <option value="Penanganan CS" {% if
+                                                                                ticket.tahapan=="Penanganan CS"
+                                                                                %}selected{% endif %}>Penanganan CS
+                                                                            </option>
+                                                                            <option value="Eskalasi ke OPS" {% if
+                                                                                ticket.tahapan=="Eskalasi ke OPS"
+                                                                                %}selected{% endif %}>Eskalasi ke OPS
+                                                                            </option>
+                                                                            <option value="Menunggu dokumen tambahan" {%
+                                                                                if
+                                                                                ticket.tahapan=="Menunggu dokumen tambahan"
+                                                                                %}selected{% endif %}>Menunggu dokumen
+                                                                                tambahan
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="row mb-7">
+                                                                    <label class="col-lg-5 fw-bold text-muted">Deksripsi</label>
+                                                                    <div class="col-lg-12">
+                                                                        <textarea name="deskripsi_pengaduan" rows="5" class="form-control form-control-solid" disabled>{{ ticket.deskripsi_pengaduan or '' }}</textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <div class="row">
+                                                                    <div class="col-md-6">
+                                                                    </div>
+                                                                    <div class="col-md-12 text-end">
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">Simpan
+                                                                        </button>
+                                                                    </div>
+                                                                </div> -->
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                     <hr style="height: 1px; size: 20;">
+                                                     <div class="row">
+                                                        <div class="row mb-7">
+                                                            <label class="col-lg-3 fw-bold text-muted">Tanggal Tiket Masuk</label>
+                                                            <div class="col-lg-9">
+                                                                <span class="fw-bold fs-6 text-gray-800 text-hover-primary">
+                                                                    {{ ticket.tanggal.strftime('%Y-%m-%d') if ticket.tanggal else '-' }}
+                                                                </span>
+                                                            </div>
+                                                        </div>  
+                                                        <div class="row mb-7">
+                                                            <label class="col-lg-3 fw-bold text-muted">Tanggal Tiket Tutup</label>
+                                                            <div class="col-lg-9">
+                                                                <span class="fw-bold fs-6 text-gray-800 text-hover-primary"> {{ ticket.nomor_ticket.closed_ticket or '-' }}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <label class="col-lg-3 fw-bold text-muted">Nama CS</label>
+                                                            <div class="col-lg-9">
+                                                                <span class="fw-bold fs-6 text-gray-800 text-hover-primary"> {{ ticket.user.username or '-' }}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                     </div>
+                                                    <hr style="height: 1px; size: 20;">
+                                                    <div class="row">
+                                                        {% if ticket.document %}
+                                                        <div class="col-md-6 ">
+                                                            <label class="form-label fw-bold text-muted">Dokumen Terlampir:</label>
+                                                            <div class="border rounded p-3 bg-light">
+                                                                {% for file in ticket.document.split(',') %}
+                                                                <div class="d-flex justify-content-between align-items-center mb-2 bg-white p-2 rounded shadow-sm">
+                                                                    <div>
+                                                                        <i class="fas fa-file-alt text-primary me-2"></i>
+                                                                        <a href="{{ url_for('static', filename='uploads/' ~ file) }}" target="_blank">{{ file }}</a>
+                                                                    </div>
+                                                                </div>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card mb-5 mb-xl-10">
+                                                <div class="card-header d-flex justify-content-between align-items-center cursor-pointer"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapse_kuasa_konsumen"
+                                                    aria-expanded="false" aria-controls="collapse_kuasa_konsumen"
+                                                    id="kuasaKonsumenHeader">
+                                                    <h3 class="fw-bolder m-0">Informasi Kuasa Konsumen</h3>
+                                                    <i class="fas fa-chevron-down" id="iconKuasaKonsumen"></i>
+                                                </div>
+                                                <div id="collapse_kuasa_konsumen" class="collapse">
+                                                    {% set kontak = ticket.kontaks[0] if ticket.kontaks else None %}
+                                                    <form class="form" method="POST"
+                                                        action="{{ url_for('add_kontak', ticket_id=ticket.id) }}">
+                                                        <div class="card-body border-top p-9">
+
+                                                            <div class="row mb-6">
+                                                                <label class="col-lg-4 col-form-label fw-bold fs-6">Nama
+                                                                    Lengkap</label>
+                                                                <div class="col-lg-8 fv-row">
+                                                                    <input type="text" name="nama_lengkap"
+                                                                        class="form-control form-control-lg form-control-solid"
+                                                                        placeholder="Information name"
+                                                                        value="{{ kontak.nama_lengkap if kontak else '' }}" disabled/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-6">
+                                                                <label
+                                                                    class="col-lg-4 col-form-label fw-bold fs-6">NIK</label>
+                                                                <div class="col-lg-8 fv-row">
+                                                                    <input type="number" name="nik"
+                                                                        class="form-control form-control-lg form-control-solid"
+                                                                        placeholder="Information NIK"
+                                                                        value="{{ kontak.nik if kontak else '' }}" disabled/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-6">
+                                                                <label class="col-lg-4 col-form-label fw-bold fs-6">No
+                                                                    HP</label>
+                                                                <div class="col-lg-8 fv-row">
+                                                                    <input type="number" name="phone"
+                                                                        class="form-control form-control-lg form-control-solid"
+                                                                        placeholder="Information phone"
+                                                                        value="{{ kontak.phone if kontak else '' }}" disabled/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-6">
+                                                                <label
+                                                                    class="col-lg-4 col-form-label fw-bold fs-6">Kontak
+                                                                    yang bisa dihubungin</label>
+                                                                <div class="col-lg-8 fv-row">
+                                                                    <input type="text" name="phone_2"
+                                                                        class="form-control form-control-lg form-control-solid"
+                                                                        placeholder="Information contact"
+                                                                        value="{{ kontak.phone_2 if kontak else '' }}" disabled/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-6">
+                                                                <label
+                                                                    class="col-lg-4 col-form-label fw-bold fs-6">Email</label>
+                                                                <div class="col-lg-8 fv-row">
+                                                                    <input type="email" name="email"
+                                                                        class="form-control form-control-lg form-control-solid"
+                                                                        placeholder="Information email"
+                                                                        value="{{ kontak.email if kontak else '' }}" disabled/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-5 mb-xl-10">
+                                <div class="card-header border-0 cursor-pointer " role="button"
+                                    data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details"
+                                    aria-expanded="true" aria-controls="kt_account_profile_details">
+                                    <div class="card-title m-0">
+                                        <h3 class="fw-bolder m-0">Follow Up Pengaduan</h3>
+                                    </div>
+                                </div>
+                                <div id="kt_account_profile_details" class="collapse show">
+                                    <form method="POST" enctype="multipart/form-data"
+                                        action="{{ url_for('follow_up_pengaduan', nomor_ticket_id=nomor_ticket.id) }}">
+                                        <div class="card-body border-top p-9">
+                                            <div class="row mb-6">
+                                                <label class="col-lg-4 col-form-label fw-bold fs-6 text-muted">Jenis
+                                                    Pengaduan</label>
+                                                <div class="col-lg-8 fv-row">
+                                                    <select name="jenis_pengaduan"
+                                                        class="form-select form-control form-control-lg form-control-solid form-select-lg status-select"
+                                                        disabled>
+                                                        {% for id, label in jenis_pengaduan_map.items() %}
+                                                        <option value="{{ id }}" {% if
+                                                            tickets[0].jenis_pengaduan|int==id %}selected{% endif %}>{{
+                                                            label }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-6">
+                                                <label class="col-lg-4 col-form-label fw-bold fs-6 text-muted">Detail
+                                                    Pengaduan</label>
+                                                <div class="col-lg-8 fv-row">
+                                                    <select name="detail_pengaduan"
+                                                        class="form-select form-control form-control-lg form-control-solid form-select-lg status-select"
+                                                        disabled>
+                                                        {% set jenis_id = tickets[0].jenis_pengaduan|int %}
+                                                        {% for detail in detail_pengaduan_map[jenis_id] %}
+                                                        <option value="{{ detail }}" {% if
+                                                            tickets[0].detail_pengaduan==detail %}selected{% endif %}>{{
+                                                            detail }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-6">
+                                                <label
+                                                    class="col-lg-4 col-form-label fw-bold fs-6 text-muted">Kronologis</label>
+                                                <div class="col-lg-8 fv-row">
+                                                    <textarea name="kronologis"
+                                                        class="form-control form-control-lg form-control-solid"
+                                                        rows="4" disabled>{{ tickets[0].kronologis or '' }}</textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-6">
+                                                <label class="col-lg-4 col-form-label fw-bold fs-6 text-muted">Bukti Chat</label>
+                                                <div class="col-lg-8 fv-row">
+                                                    {% if tickets[0].bukti_chat %}
+                                                    <div class="mt-3 d-flex flex-wrap gap-3" id="bukti-preview">
+                                                        {% for file in tickets[0].bukti_chat.split(',') %}
+                                                        <div class="position-relative" style="width: 120px;">
+                                                            <img src="{{ url_for('static', filename='uploads/' ~ file) }}"
+                                                                class="img-thumbnail"
+                                                                style="width: 100%; height: auto;">
+                                                            <input type="hidden" name="existing_images"
+                                                                value="{{ file }}">
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                            <div class="modal fade" id="kt_modal_add_order" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered mw-650px">
+                                    <div class="modal-content">
+                                        <form class="form" action="{{ url_for('add_order', ticket_id=tickets[0].id) }}"
+                                            method="POST">
+                                            <div class="modal-header" id="kt_modal_add_order_header">
+                                                <h2 class="fw-bolder">Add Order</h2>
+                                            </div>
+                                            <div class="modal-body py-10 px-lg-17">
+                                                <div class="scroll-y me-n7 pe-7" data-kt-scroll-offset="300px">
+                                                    <div class="row g-9 mb-7">
+                                                        <div class="col-md-6 fv-row">
+                                                            <label class="fs-6 fw-bold mb-2">Order
+                                                                Number</label>
+                                                            <input type="text" name="order_no"
+                                                                class="form-control form-control-solid"
+                                                                placeholder="Input order number" />
+                                                        </div>
+                                                        <div class="col-md-6 fv-row">
+                                                            <label class="fs-6 fw-bold mb-2">Nama OS</label>
+                                                            <input type="text" class="form-control form-control-solid"
+                                                                placeholder="Input nama OS" name="nama_os" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row g-9 mb-7">
+                                                        <div class="col-md-6 fv-row">
+                                                            <label class="fs-6 fw-bold mb-2">Bucket</label>
+                                                            <input type="text" name="nama_bucket"
+                                                                class="form-control form-control-solid"
+                                                                placeholder="Input bucket" />
+                                                        </div>
+                                                        <div class="col-md-6 fv-row">
+                                                            <label class="fs-6 fw-bold mb-2">Nama DC</label>
+                                                            <input type="text" class="form-control form-control-solid"
+                                                                placeholder="Input nama DC" name="nama_dc" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex flex-column mb-7 fv-row">
+                                                        <label class="required fs-6 fw-bold mb-2">Tanggal</label>
+                                                        <input type="date" name="tanggal"
+                                                            class="form-control form-control-solid" required />
+                                                    </div>
+                                                    <div class="d-flex flex-column mb-7 fv-row">
+                                                        <label class="required fs-6 fw-bold mb-2">Deskripsi Pengaduan</label>
+                                                        <textarea class="form-control form-control-solid"
+                                                            name="deskripsi_pengaduan" rows="3"
+                                                            placeholder="Type Notes"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer flex-center">
+                                                <button type="submit" id="kt_modal_add_order_submit"
+                                                    class="btn btn-primary">
+                                                    <span class="indicator-label">Submit</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="kt_modal_add_catatan_nomor_ticket" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered mw-650px">
+                                    <div class="modal-content">
+                                        <form class="form" action="{{ url_for('add_catatan', nomor_ticket_id=nomor_ticket.id) }}" method="POST">
+                                            <div class="modal-header" id="kt_modal_add_order_header">
+                                                <h2 class="fw-bolder">Add Catatan</h2>
+                                            </div>
+                                            <div class="modal-body py-10 px-lg-17">
+                                                <div class="scroll-y me-n7 pe-7" data-kt-scroll-offset="300px">
+                                                    <div class="d-flex flex-column mb-7 fv-row">
+                                                        <label class="required fs-6 fw-bold mb-2">Deskripsi Catatan</label>
+                                                        <textarea class="form-control form-control-solid"
+                                                            name="deskripsi" rows="3"
+                                                            placeholder="Type Notes"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer flex-center">
+                                                <button type="submit" id="kt_modal_add_order_submit"
+                                                    class="btn btn-primary">
+                                                    <span class="indicator-label">Submit</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="kt_modal_view_catatan_nomor_ticket" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered mw-650px">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h2 class="fw-bolder">View Catatan - {{ nomor_ticket.nomor_ticket }}</h2>
+                                        </div>
+                                        <div class="modal-body py-10 px-lg-17">
+                                            <div class="scroll-y me-n7 pe-7" data-kt-scroll-offset="300px" style="max-height: 400px; overflow-y: auto;">
+                                                {% if catatan_list %}
+                                                    {% for c in catatan_list %}
+                                                    <div class="border p-4 rounded mb-4 bg-light">
+                                                        <div class="mb-2">
+                                                        <strong>Tanggal : </strong> {{ c.tanggal.strftime('%d-%m-%Y %H:%M') if c.tanggal else '-' }}
+                                                        </div>
+                                                        <div class="mb-2">
+                                                        <strong>Uploaded by : </strong> {{ c.user.username if c.user else '-' }}
+                                                        </div>
+                                                        <div class="mb-2">
+                                                        <strong>Deskripsi:</strong>
+                                                        <div class="text-muted mt-1">{{ c.deskripsi or '-' }}</div>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <p class="text-muted">Belum ada catatan untuk ticket ini.</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
+                    <div
+                        class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
+                        <div class="text-dark order-2 order-md-1">
+                            <span class="text-muted fw-bold me-1">2025©</span>
+                            <a href="https://ksparthaniaga.com/" target="_blank"
+                                class="text-gray-800 text-hover-primary">KSP Artha Niaga</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+        <span class="svg-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)"
+                    fill="black" />
+                <path
+                    d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
+                    fill="black" />
+            </svg>
+        </span>
+    </div>
+    <script>var hostUrl = "../static/assets/";</script>
+    <script src="../static/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="../static/assets/js/scripts.bundle.js"></script>
+    <script src="../static/assets/js/custom/widgets.js"></script>
+    <script src="../static/assets/js/custom/apps/chat/chat.js"></script>
+    <script src="../static/assets/js/custom/modals/create-app.js"></script>
+    <script src="../static/assets/js/custom/modals/upgrade-plan.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.querySelectorAll('.status-select').forEach(select => {
+            select.addEventListener('change', function () {
+                const ticketId = this.dataset.ticketId;
+                const status = this.value;
+                const keberatanFields = document.getElementById(`keberatan_fields_${ticketId}`);
+                const tutupFields = document.getElementById(`tutup_fields_${ticketId}`);
+
+                if (status === '3') {
+                    keberatanFields.classList.remove('d-none');
+                    tutupFields.classList.add('d-none');
+                } else if (status === '4') {
+                    tutupFields.classList.remove('d-none');
+                    keberatanFields.classList.add('d-none');
+                } else {
+                    keberatanFields.classList.add('d-none');
+                    tutupFields.classList.add('d-none');
+                }
+            });
+        });
+    </script>
+    <script>
+        setTimeout(function () {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function (alert) {
+                alert.classList.remove('show');
+                alert.classList.add('fade');
+                setTimeout(() => alert.remove(), 500);
+            });
+        }, 2000); 
+    </script>
+    <script>
+        const headerKuasa = document.getElementById('kuasaKonsumenHeader');
+        const iconKuasa = document.getElementById('iconKuasaKonsumen');
+        const collapseKuasa = document.getElementById('collapse_kuasa_konsumen');
+
+        collapseKuasa.addEventListener('show.bs.collapse', function () {
+            iconKuasa.classList.remove('fa-chevron-down');
+            iconKuasa.classList.add('fa-chevron-up');
+        });
+
+        collapseKuasa.addEventListener('hide.bs.collapse', function () {
+            iconKuasa.classList.remove('fa-chevron-up');
+            iconKuasa.classList.add('fa-chevron-down');
+        });
+    </script>
+    <script>
+        function previewImages() {
+            const previewContainer = document.getElementById('preview-container');
+            const input = document.getElementById('bukti_chat');
+            previewContainer.innerHTML = "";
+
+            if (input.files) {
+                Array.from(input.files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const img = document.createElement("img");
+                        img.src = e.target.result;
+                        img.classList.add("img-thumbnail");
+                        img.style.width = "100px";
+                        img.style.height = "100px";
+                        previewContainer.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+    </script>
+    <script>
+        const detailMap = {{ detail_pengaduan_map | tojson }};
+        const jenisSelect = document.querySelector("select[name='jenis_pengaduan']");
+        const detailSelect = document.querySelector("select[name='detail_pengaduan']");
+
+        jenisSelect.addEventListener("change", function () {
+            const selected = parseInt(this.value);
+            const details = detailMap[selected] || [];
+            detailSelect.innerHTML = "";
+            details.forEach(function (d) {
+                const opt = document.createElement("option");
+                opt.value = d;
+                opt.innerText = d;
+                detailSelect.appendChild(opt);
+            });
+        });
+    </script>
+    <script>
+        function removeImage(button, filename) {
+            const imageDiv = button.parentElement;
+            imageDiv.remove();
+
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "deleted_images";
+            input.value = filename;
+            document.querySelector("form").appendChild(input);
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('select[name="tahapan"]').forEach(function (dropdown) {
+            const form = dropdown.closest('form');
+            const ticketId = form.dataset.ticketId;
+            const qcDropdown = document.getElementById('qc_user_dropdown_' + ticketId);
+            const qcSelect = qcDropdown.querySelector('select[name="id_qc"]');
+            function toggleQcField() {
+            if (dropdown.value === 'Eskalasi ke QC') {
+                qcDropdown.classList.remove('d-none');
+                qcSelect.setAttribute('required', 'required');
+            } else {
+                qcDropdown.classList.add('d-none');
+                qcSelect.removeAttribute('required');
+            }
+            }
+            dropdown.addEventListener('change', toggleQcField);
+            toggleQcField();
+        });
+        });
+    </script>
+    <script>
+    document.getElementById('closeTicketBtn').addEventListener('click', function (e) {
+        Swal.fire({
+            title: 'Yakin ingin menutup?',
+            text: "Semua ticket akan ditandai sebagai selesai!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, tutup sekarang!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('closeTicketForm').submit();
+            }
+        });
+    });
+    </script>
+    <script>
+document.getElementById('closeTicketBtn').addEventListener('click', function () {
+    Swal.fire({
+        title: 'Yakin ingin menutup?',
+        text: "Semua ticket akan ditandai sebagai selesai!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Ya, tutup sekarang!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('closeTicketForm').submit();
+        }
+    });
+});
+</script>
+<script>
+document.querySelectorAll(".change-status").forEach(btn => {
+    btn.addEventListener("click", function () {
+        const status = this.getAttribute("data-status");
+        const label = this.getAttribute("data-label");
+
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: `Ubah status tiket menjadi ${label}?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, ubah!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const form = document.getElementById("statusForm");
+                form.action = `/nomor-ticket/{{ nomor_ticket.id }}/update-status/${status}`;
+                form.submit();
+            }
+        });
+    });
+});
+</script>
+</body>
+
+</html>
