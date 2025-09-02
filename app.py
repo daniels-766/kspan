@@ -20,8 +20,8 @@ from zoneinfo import ZoneInfo
 JAKARTA_TZ = ZoneInfo("Asia/Jakarta")
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/dashboard-an'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Ksp%40888@localhost/dashboard_an'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/dashboard-an'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Ksp%40888@localhost/dashboard_an'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'b35dfe6ce150230940bd145823034486'
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
@@ -530,7 +530,6 @@ def filtering():
     range1 = request.args.get('range1', '')
     range2 = request.args.get('range2', '')
 
-    # --- Helper untuk parsing range dari request
     def parse_range(date_range):
         try:
             start, end = date_range.split(' - ')
@@ -538,7 +537,6 @@ def filtering():
         except ValueError:
             return None, None
 
-    # --- Helper untuk format label range (Bahasa Indonesia)
     def format_range_label(start, end):
         bulan_id = {
             'January': 'Januari', 'February': 'Februari', 'March': 'Maret', 'April': 'April',
@@ -560,11 +558,9 @@ def filtering():
         except Exception:
             return "Tidak ada data"
 
-    # --- Ambil range dari request
     range1_start, range1_end = parse_range(range1)
     range2_start, range2_end = parse_range(range2)
 
-    # --- Kalau range1 kosong, fallback pakai min/max dari DB
     if not range1_start or not range1_end:
         min_tanggal = db.session.query(func.min(Ticket.tanggal)).scalar()
         max_tanggal = db.session.query(func.max(Ticket.tanggal)).scalar()
@@ -573,13 +569,11 @@ def filtering():
             range1_start = min_tanggal.strftime('%Y-%m-%d')
             range1_end = max_tanggal.strftime('%Y-%m-%d')
 
-    # --- Label untuk chart
     label_range1 = format_range_label(range1_start, range1_end) if range1_start and range1_end else "Tidak ada data"
     label_range2 = format_range_label(range2_start, range2_end) if range2_start and range2_end else None
 
     chart_title = f"Jumlah Perbandingan antar OS ({label_range1}" + (f" | {label_range2}" if label_range2 else "") + ")"
 
-    # --- Query data sesuai filter
     def get_filtered_data(start_date, end_date):
         query = Ticket.query
         query = query.filter(Ticket.nama_os.isnot(None)).filter(Ticket.nama_os != '')
@@ -618,10 +612,8 @@ def filtering():
     os_count1, bucket_info1 = get_filtered_data(range1_start, range1_end) if range1_start and range1_end else ({}, {})
     os_count2, bucket_info2 = get_filtered_data(range2_start, range2_end) if range2_start and range2_end else ({}, {})
 
-    # --- Gabung label OS dari kedua range
     chart_labels = sorted(list(set(os_count1.keys()) | set(os_count2.keys())))
 
-    # --- Siapkan data chart
     chart_series = []
     if os_count1:
         chart_series.append({
@@ -637,11 +629,9 @@ def filtering():
             "bucket_info": [bucket_info2.get(os, []) for os in chart_labels]
         })
 
-    # --- Data tambahan untuk filter dropdown
     list_os = db.session.query(Ticket.nama_os).distinct().all()
     list_bucket = db.session.query(Ticket.nama_bucket).distinct().all()
 
-    # --- Warna default chart
     default_colors = [
         "#1E90FF", "#28a745", "#ffc107", "#dc3545", "#6f42c1",
         "#20c997", "#fd7e14", "#6610f2", "#17a2b8", "#343a40"
