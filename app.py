@@ -20,7 +20,7 @@ from zoneinfo import ZoneInfo
 JAKARTA_TZ = ZoneInfo("Asia/Jakarta")
 
 app = Flask(__name__)
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/dashboard-an'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/dashboard-an'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Ksp%40888@localhost/dashboard_an'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'b35dfe6ce150230940bd145823034486'
